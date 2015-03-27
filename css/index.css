@@ -28,6 +28,10 @@ header h1 {
     header {
         padding: 75px 0px 150px 0px;
     }
+
+    header h1 {
+        font-size: 40px;
+    }
 }
 
 .btn-lg {
