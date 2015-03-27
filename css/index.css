@@ -1,0 +1,45 @@
+header {
+    text-align: center;
+    background-attachment: scroll;
+    background-image: url(images/geisel-large.jpg);
+    color: #fff;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: auto;
+    padding: 250px 0px 200px 0px;
+}
+header h1 {
+    color: White;
+    font-size: 54px;
+    padding: 20px 20px 20px 20px;
+    text-align: center;
+}
+
+.rwd-break {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .rwd-break {
+        display: block;
+    }
+
+    header {
+        padding: 75px 0px 150px 0px;
+    }
+}
+
+.btn-lg {
+    background-color: #4e9332;
+    color: White;
+    margin-top: 50px;
+    padding: 20px 40px 20px 40px;
+}
+
+.logo {
+    font-family: 'Indie Flower', cursive;
+    font-weight: normal;
+    color: Yellow;
+    margin: 30px 10px 30px 10px;
+}
