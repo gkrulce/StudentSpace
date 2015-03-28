@@ -1,49 +1,91 @@
+body {
+  background-color: #999;
+}
+
 header {
-    text-align: center;
-    background-attachment: scroll;
-    background-image: url(images/geisel-large.jpg);
-    color: #fff;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow: auto;
-    padding: 250px 0px 200px 0px;
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(images/geisel-large.jpg);
+  color: #fff;
+  height: 100vh;
+  text-align: center;
 }
-header h1 {
-    color: White;
-    font-size: 54px;
-    padding: 20px 20px 20px 20px;
-    text-align: center;
-}
+
+
 
 .rwd-break {
     display: none;
 }
 
 @media screen and (max-width: 767px) {
-    .rwd-break {
-        display: block;
-    }
+  .rwd-break {
+    display: block;
+  }
 
-    header {
-        padding: 75px 0px 150px 0px;
-    }
+  header {
+    padding: 75px 0px 150px 0px;
+  }
 
-    header h1 {
-        font-size: 40px;
-    }
+  header h1 {
+    font-size: 40px;
+  }
 }
 
 .btn-lg {
-    background-color: #4e9332;
-    color: White;
-    margin-top: 50px;
-    padding: 20px 40px 20px 40px;
+  background-color: rgba(255, 201, 31, 1);
+  color: White;
+  margin: 10px 0 0 0;
+  width: 100%;
 }
 
-.logo {
-    font-family: 'Indie Flower', cursive;
-    font-weight: normal;
-    color: Yellow;
-    margin: 30px 10px 30px 10px;
+.header-box {
+  height: auto;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(0%, -50%);
+  /*transition: all 0.5s cubic-bezier(0.17, 0.67, 0.44, 0.99);*/
+  width: 100vw;
+}
+
+#logo {
+  color: #fff;
+  font-family: 'Indie Flower', cursive;
+  font-size: 135px;
+  font-weight: normal;
+  line-height: 110px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.2);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#motto {
+  color: #fff;
+  font-size: 35px;
+  padding: 0;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.color {
+  color: rgba(255, 201, 31, 1);
+}
+
+.form {
+  margin: 0 auto;
+  width: 300px;
+}
+
+input[type="text"] {
+  color: #000;
+  float: left;
+  height: 45px;
+  outline: 0;
+  outline-style: none;
+  outline-width: 0;
+  padding: 5px;
+  margin: 0 auto;
+  width: 100%;
 }
