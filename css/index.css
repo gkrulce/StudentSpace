@@ -47,3 +47,24 @@ header h1 {
     color: Yellow;
     margin: 30px 10px 30px 10px;
 }
+
+#quote p {
+    font-size: 16pt;
+    font-family: 'Open Sans Condensed', sans-serif;
+    line-height: 200%;
+    color: White;
+
+}
+#quote {
+    background-color: #2b485f;
+}
+@media screen and (min-width: 767px) {
+    #quote p{
+        font-size: 32pt;
+    }
+}
+
+.fa-quote-left, .fa-quote-right {
+    margin-right: .5em;
+    margin-left: .5em;
+}
