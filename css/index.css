@@ -1,8 +1,9 @@
 body {
   background-color: #999;
+  overflow-x: hidden;
 }
 
-header {
+#header {
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
@@ -35,9 +36,16 @@ header {
 
 .btn-lg {
   background-color: rgba(255, 201, 31, 1);
-  color: White;
+  color: #fff;
   margin: 10px 0 0 0;
+  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.44, 0.99);
   width: 100%;
+}
+
+.btn-lg:hover {
+  background-color: rgba(255, 219, 80, 1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  color: #fff;
 }
 
 .header-box {
@@ -88,4 +96,19 @@ input[type="text"] {
   padding: 5px;
   margin: 0 auto;
   width: 100%;
+}
+
+.section {
+  background-color: #fff;
+  height: auto;
+  padding: 30px;
+  width: 100vw;
+}
+
+.content {
+  border: 1px solid #999;
+  height: auto;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 95vw;
 }
