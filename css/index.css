@@ -131,3 +131,44 @@ input[type="text"]:focus {
   max-width: 600px;
   text-align: center;
 }
+
+#quote p {
+    font-size: 16pt;
+    font-family: 'Open Sans Condensed', sans-serif;
+    line-height: 200%;
+    color: White;
+
+}
+#quote {
+    background-color: #2b485f;
+}
+@media screen and (min-width: 767px) {
+    #quote p{
+        font-size: 32pt;
+    }
+}
+
+.fa-quote-left, .fa-quote-right {
+    margin-right: .5em;
+    margin-left: .5em;
+}
+
+.row-header h2{
+    text-align: center;
+    font-weight: bold;
+}
+
+.row-content h3{
+    text-align: center;
+    display: inline;
+}
+
+.row-content p {
+    text-align: center;
+}
+
+.fa-sign-in, .fa-users, .fa-graduation-cap {
+    color: #2b485f;
+    font-size: 3em;
+    margin: .5em;
+}
