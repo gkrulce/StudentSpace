@@ -38,7 +38,7 @@ body {
 .btn-lg {
   background-color: rgba(255, 201, 31, 1);
   color: #fff;
-  margin: 10px 0 0 0;
+  margin: 50px 0 0 0;
   transition: all 0.5s cubic-bezier(0.17, 0.67, 0.44, 0.99);
   width: 100%;
 }
@@ -117,7 +117,6 @@ input[type="text"]:focus {
 }
 
 .content {
-  border: 1px solid #999;
   height: auto;
   margin: 0 auto;
   max-width: 600px;
@@ -125,50 +124,73 @@ input[type="text"]:focus {
 }
 
 .content2 {
-  border: 1px solid #999;
+  color: #fff;
   height: auto;
   margin: 0 auto;
   max-width: 600px;
   text-align: center;
 }
 
+section {
+  padding: 15px 10px 15px 10px;
+}
+
+#footer {
+  background-color: #121e28;
+}
+
 #quote p {
-    font-size: 16pt;
-    font-family: 'Open Sans Condensed', sans-serif;
-    line-height: 200%;
-    color: White;
+  font-size: 16pt;
+  font-family: 'Open Sans Condensed', sans-serif;
+  line-height: 180%;
+  color: White;
 
 }
-#quote {
-    background-color: #2b485f;
+
+#quote p.quoth {
+  font-size: 14px;
+  text-align: right;
 }
+
+#quote {
+  background-color: #2b485f;
+}
+
 @media screen and (min-width: 767px) {
-    #quote p{
-        font-size: 32pt;
-    }
+  #quote p{
+    font-size: 32pt;
+  }
+  #quote p.quoth {
+    font-size: 28px;
+  }
 }
 
 .fa-quote-left, .fa-quote-right {
-    margin-right: .5em;
-    margin-left: .5em;
+  margin-left: .5em;
+  margin-right: .5em;
 }
 
 .row-header h2{
-    text-align: center;
-    font-weight: bold;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mini-head {
+  border: 1px solid #000;
+  width: 230px;
 }
 
 .row-content h3{
-    text-align: center;
-    display: inline;
+  display: inline;
+  text-align: center;
 }
 
 .row-content p {
-    text-align: center;
+  text-align: center;
 }
 
 .fa-sign-in, .fa-users, .fa-graduation-cap {
-    color: #2b485f;
-    font-size: 3em;
-    margin: .5em;
+  color: #2b485f;
+  font-size: 3em;
+  margin: .5em;
 }
