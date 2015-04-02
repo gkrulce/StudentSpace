@@ -12,7 +12,10 @@
   {
     session_start();
     $_SESSION['user'] = new Student($row["id"], $row["user_name"]);
-    header('Location: view.html');
+    header('Location: ../view.html');
+  }else
+  {
+    echo "Try username: demo.\n";
   }
   
 ?>
