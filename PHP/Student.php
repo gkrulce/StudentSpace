@@ -30,25 +30,20 @@ class Student
   /* Setter methods */
 
   /* $assocArray must have certain key-value pairs or database query will fail.
-     Refer to StudyGroup constructor for specifics. */
+   */
   public function createStudyGroup($db, $assocArray)
   {
+    /* An example of how to set up an associate array for this function 
+    $assocArray = array();
+    $assocArray["start_date_time"] = "2015-01-01 12:00:00";
+    $assocArray["short_desc"] = "TEST2";
+    $assocArray["long_desc"] = "TESTEST2";
+    $assocArray["class_id"] = 8; */
 
-    $dateTime = $assocArray['start_date_time'];
-    $shortDesc = $assocArray['short_desc'];
-    $longDesc = $assocArray['long_desc'];
-    $classId = $assocArray['id'];
-
-    $sth = $db->prepare('INSERT INTO study_groups (class_id, start_time, short_desc, long_desc) VALUES (:classId, :startDateTime, :shortDesc, :longDesc);');
-    $sth->bindParam(':classId', $classId, PDO::PARAM_INT);
-    $sth->bindParam(':startDateTime', $dateTime, PDO::PARAM_STR);
-    $sth->bindParam(':shortDesc', $shortDesc, PDO::PARAM_STR);
-    $sth->bindParam(':longDesc', $longDesc, PDO::PARAM_STR);
-
-    $sth->execute();
+    $sth = $db->prepare('INSERT INTO study_groups (class_id, start_time, short_desc, long_desc) VALUES (:class_id, :start_date_time, :short_desc, :long_desc);');
+    $sth->execute($assocArray);
      
     $groupId = $db->lastInsertId();
-    print "Created group with id " . $groupId;
     $this->joinStudyGroup($db, $groupId);
   }
 
@@ -77,17 +72,17 @@ class Student
 }
 
 /* Tester code */
-  include('db.php');
+/*  include('db.php');
   $stud = new Student(2, 'gkrulce');
-  /*$assocArr = array();
+  $assocArr = array();
   $assocArr["start_date_time"] = "2015-01-01 12:00:00";
   $assocArr["short_desc"] = "TEST2";
   $assocArr["long_desc"] = "TESTEST2";
-  $assocArr["id"] = 8;
-  $stud->createStudyGroup($db, $assocArr);*/
-  $stud->joinStudyGroup($db, "71");
+  $assocArr["class_id"] = 8;
+  $stud->createStudyGroup($db, $assocArr);
+  //$stud->joinStudyGroup($db, "71");
   foreach($stud->getCurrentStudyGroups($db) as $row)
   {
-    var_dump($row);
-  }
+    //var_dump($row);
+  } */
 ?>
