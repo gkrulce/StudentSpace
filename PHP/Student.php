@@ -1,5 +1,4 @@
 <?php
-include('StudyGroup.php');
 class Student
 { 
   private $uid;
@@ -15,14 +14,7 @@ class Student
   /* Getter methods */
   public function getAllStudyGroups($db)
   {
-    $groups = array();
-    $result = $db->query('SELECT (SELECT COUNT(*) FROM users_to_study_groups usg where usg.study_group_id = sg.id) group_size, c.id, c.name, sg.start_time, sg.id group_id, sg.short_desc, sg.long_desc FROM study_groups sg JOIN v_class c ON sg.class_id = c.id JOIN users_to_classes uc on c.id = uc.class_id JOIN users u ON u.id = uc.user_id WHERE u.id = ' . $this->uid . ' AND sg.id NOT IN (SELECT study_group_id FROM users_to_study_groups WHERE user_id = ' . $this->uid . ');');
-
-    foreach($result as $row)
-    {
-      $groups[] = new StudyGroup($row);
-    }
-    return $groups;
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_study_groups usg where usg.study_group_id = sg.id) group_size, c.id, c.name, sg.start_time, sg.id group_id, sg.short_desc, sg.long_desc FROM study_groups sg JOIN v_class c ON sg.class_id = c.id JOIN users_to_classes uc on c.id = uc.class_id JOIN users u ON u.id = uc.user_id WHERE u.id = ' . $this->uid . ' AND sg.id NOT IN (SELECT study_group_id FROM users_to_study_groups WHERE user_id = ' . $this->uid . ');');
   }
 
   public function getClasses($db)
@@ -32,14 +24,7 @@ class Student
 
   public function getCurrentStudyGroups($db)
   {
-    $groups = array();
-    $result = $db->query('SELECT (SELECT COUNT(*) FROM users_to_study_groups usg where usg.study_group_id = sg.id) group_size, c.id, c.name, sg.start_time, sg.id group_id, sg.short_desc, sg.long_desc FROM users u JOIN users_to_study_groups usg ON u.id = usg.user_id JOIN study_groups sg on usg.study_group_id = sg.id JOIN v_class c ON c.id = sg.class_id WHERE u.id=' . $this->uid . ';');
-    foreach($result as $row)
-    {
-      $groups[] = new StudyGroup($row);
-    }
-
-    return $groups;
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_study_groups usg where usg.study_group_id = sg.id) group_size, c.id, c.name, sg.start_time, sg.id group_id, sg.short_desc, sg.long_desc FROM users u JOIN users_to_study_groups usg ON u.id = usg.user_id JOIN study_groups sg on usg.study_group_id = sg.id JOIN v_class c ON c.id = sg.class_id WHERE u.id=' . $this->uid . ';');
   }
 
   /* Setter methods */
@@ -48,24 +33,45 @@ class Student
      Refer to StudyGroup constructor for specifics. */
   public function createStudyGroup($db, $assocArray)
   {
-    $newGroup = new StudyGroup($assocArray);
-    $newGroup->createGroup($db, $this->uid);
+
+    $dateTime = $assocArray['start_date_time'];
+    $shortDesc = $assocArray['short_desc'];
+    $longDesc = $assocArray['long_desc'];
+    $classId = $assocArray['id'];
+
+    $sth = $db->prepare('INSERT INTO study_groups (class_id, start_time, short_desc, long_desc) VALUES (:classId, :startDateTime, :shortDesc, :longDesc);');
+    $sth->bindParam(':classId', $classId, PDO::PARAM_INT);
+    $sth->bindParam(':startDateTime', $dateTime, PDO::PARAM_STR);
+    $sth->bindParam(':shortDesc', $shortDesc, PDO::PARAM_STR);
+    $sth->bindParam(':longDesc', $longDesc, PDO::PARAM_STR);
+
+    $sth->execute();
+     
+    $groupId = $db->lastInsertId();
+    print "Created group with id " . $groupId;
+    $this->joinStudyGroup($db, $groupId);
   }
 
   public function exitStudyGroup($db, $groupId)
   {
-    $assocArray = array();
-    $assocArray['groupId'] = $groupId;
-    $group = new StudyGroup($assocArray);
-    $group->exitGroup($db, $this->uid);
+    $sth = $db->prepare('DELETE FROM users_to_study_groups WHERE study_group_id = :groupId AND user_id = :userId;');
+
+    $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
+    $sth->bindParam(':userId', $this->uid, PDO::PARAM_INT);
+
+    $sth->execute();
   }
 
   public function joinStudyGroup($db, $groupId)
   {
-    $assocArray = array();
-    $assocArray['groupId'] = $groupId;
-    $group = new StudyGroup($assocArray);
-    $group->joinGroup($db, $this->uid);
+    $hash = md5(uniqid());
+
+    $sth = $db->prepare('INSERT INTO users_to_study_groups (study_group_id, user_id, hash) VALUES (:groupId, :userId, :hash);');
+    $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
+    $sth->bindParam(':userId', $this->uid, PDO::PARAM_INT);
+    $sth->bindParam(':hash', $hash, PDO::PARAM_STR);
+
+    $sth->execute();
   }
 
 }
@@ -73,9 +79,14 @@ class Student
 /* Tester code */
   include('db.php');
   $stud = new Student(2, 'gkrulce');
-  $stud->createStudyGroup($db, $assocArray);
-$result = $stud->getAllStudyGroups($db);
-  foreach($result as $row)
+  /*$assocArr = array();
+  $assocArr["start_date_time"] = "2015-01-01 12:00:00";
+  $assocArr["short_desc"] = "TEST2";
+  $assocArr["long_desc"] = "TESTEST2";
+  $assocArr["id"] = 8;
+  $stud->createStudyGroup($db, $assocArr);*/
+  $stud->joinStudyGroup($db, "71");
+  foreach($stud->getCurrentStudyGroups($db) as $row)
   {
     var_dump($row);
   }
