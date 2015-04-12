@@ -59,12 +59,9 @@ class Student
 
   public function joinStudyGroup($db, $groupId)
   {
-    $hash = md5(uniqid());
-
-    $sth = $db->prepare('INSERT INTO users_to_study_groups (study_group_id, user_id, hash) VALUES (:groupId, :userId, :hash);');
+    $sth = $db->prepare('INSERT INTO users_to_study_groups (study_group_id, user_id) VALUES (:groupId, :userId);');
     $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
     $sth->bindParam(':userId', $this->uid, PDO::PARAM_INT);
-    $sth->bindParam(':hash', $hash, PDO::PARAM_STR);
 
     $sth->execute();
   }
