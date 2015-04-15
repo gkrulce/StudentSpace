@@ -47,6 +47,7 @@
             <li role="presentation" class="active"><a href="create.php">Create</a></li>
             <li role="presentation"><a href="chat.html">Chat</a></li>
             <li role="presentation"><a href="settings.php">Settings</a></li>
+            <li role="presentation"><a href="logout.php">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

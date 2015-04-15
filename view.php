@@ -47,10 +47,38 @@
             <li role="presentation"><a href="create.php">Create</a></li>
             <li role="presentation"><a href="chat.html">Chat</a></li>
             <li role="presentation"><a href="settings.php">Settings</a></li>
+            <li role="presentation"><a href="logout.php">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+
+    <div class="container">
+      <h2 class="text-center"> Current Study Groups! </h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>Class Name</th>
+          <th>Group Size</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>More Information</th>
+        </tr>
+        <?php
+          foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
+          {
+            $date = new DateTime($row['start_time']);
+            echo '<tr><td>' . $row['name'] . '</td><td>';
+
+            for($i = 0 ; $i < $row['group_size']; $i++)
+            {
+              echo '<span class="fa fa-user"></span>';
+            }
+            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
+            echo '<td><a role="button" class="btn btn-primary" href="#">Join<span class="fa fa-external-link"></span></a></td></tr>';
+          }
+        ?>
+      </table>
+    </div>
 
     <div class="container">
       <h2 class="text-center"> Need a study group? </h2>
@@ -63,13 +91,20 @@
           <th>Time</th>
           <th>More Information</th>
         </tr>
-        <tr>
-          <td>CSE 110</td>
-          <td><span class="fa fa-user"></span><span class="fa fa-user"></span><span class="fa fa-user"></span></td>
-          <td>March, Sun 29 </td>
-          <td>11:30 AM</td>
-          <td><a role="button" class="btn btn-primary" href="?id=ababab">Join<span class="fa fa-external-link"></span></a></td>
-        </tr>
+        <?php
+          foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
+          {
+            $date = new DateTime($row['start_time']);
+            echo '<tr><td>' . $row['name'] . '</td><td>';
+
+            for($i = 0 ; $i < $row['group_size']; $i++)
+            {
+              echo '<span class="fa fa-user"></span>';
+            }
+            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
+            echo '<td><a role="button" class="btn btn-primary" href="#">Join<span class="fa fa-external-link"></span></a></td></tr>';
+          }
+        ?>
       </table>
     </div>
 
