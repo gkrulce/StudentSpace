@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>StudyTree | Connect and Collaborate</title>
+    <title>&#9829 StudyTree</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -24,7 +24,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/view.css">
+    <link rel="stylesheet" href="css/main.css">
 
   </head>
 
@@ -43,31 +43,35 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li role="presentation" class="active"><a href="view.html" data-toggle="tab">View</a></li>
-            <li role="presentation"><a href="create.html" data-toggle="tab">Create</a></li>
-            <li role="presentation"><a href="#" data-toggle="tab">Chat</a></li>
-            <li role="presentation"><a href="settings.html" data-toggle="tab">Settings</a></li>
+            <li role="presentation" class="active"><a href="view.php">View</a></li>
+            <li role="presentation"><a href="create.php">Create</a></li>
+            <li role="presentation"><a href="chat.html">Chat</a></li>
+            <li role="presentation"><a href="settings.php">Settings</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <table class="table table-bordered">
-      <tr>
-        <th>Class Name</th>
-        <th>Group Size</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>More Information</th>
-      </tr>
-      <tr>
-        <td>CSE 110</td>
-        <td><span class="fa fa-user"></span><span class="fa fa-user"></span><span class="fa fa-user"></span></td>
-        <td>March, Sun 29 </td>
-        <td>11:30 AM</td>
-        <td><a role="button" class="btn btn-primary" href="?id=ababab">Join<span class="fa fa-external-link"></span></a></td>
-      </tr>
-    </table>
+    <div class="container">
+      <h2 class="text-center"> Need a study group? </h2>
+      <h3 class="text-center"> Join one! </h3>
+      <table class="table table-bordered">
+        <tr>
+          <th>Class Name</th>
+          <th>Group Size</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>More Information</th>
+        </tr>
+        <tr>
+          <td>CSE 110</td>
+          <td><span class="fa fa-user"></span><span class="fa fa-user"></span><span class="fa fa-user"></span></td>
+          <td>March, Sun 29 </td>
+          <td>11:30 AM</td>
+          <td><a role="button" class="btn btn-primary" href="?id=ababab">Join<span class="fa fa-external-link"></span></a></td>
+        </tr>
+      </table>
+    </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

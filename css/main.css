@@ -12,3 +12,8 @@ body {
 th {
 	text-transform: uppercase;
 }
+
+.agenda-text {
+  width:300px;
+  height:100px;
+}

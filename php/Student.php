@@ -40,11 +40,16 @@ class Student
     $assocArray["long_desc"] = "TESTEST2";
     $assocArray["class_id"] = 8; */
 
-    $sth = $db->prepare('INSERT INTO study_groups (class_id, start_time, short_desc, long_desc) VALUES (:class_id, :start_date_time, :short_desc, :long_desc);');
-    $sth->execute($assocArray);
-     
+    $sth = $db->prepare('INSERT INTO study_groups (class_id, start_time, short_desc, long_desc, uuid) VALUES (:class_id, :start_date_time, :short_desc, :long_desc, UUID());');
+    $result = $sth->execute($assocArray);
+    if(!$result)
+    {
+      return $result;
+    }
     $groupId = $db->lastInsertId();
-    $this->joinStudyGroup($db, $groupId);
+    $result = $this->joinStudyGroup($db, $groupId);
+
+    return $result;
   }
 
   public function exitStudyGroup($db, $groupId)
@@ -63,7 +68,7 @@ class Student
     $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
     $sth->bindParam(':userId', $this->uid, PDO::PARAM_INT);
 
-    $sth->execute();
+    return $sth->execute();
   }
 
 }
