@@ -1,0 +1,14 @@
+body {
+	margin-top: 65px;
+}
+.fa-user {
+	padding-left: .2em;
+}
+
+.fa-external-link {
+	padding-left: 1em;
+}
+
+th {
+	text-transform: uppercase;
+}
