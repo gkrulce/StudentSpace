@@ -11,6 +11,29 @@ body {
 
 th {
 	text-transform: uppercase;
+	color: #FFF;
+	background-color: #0034FF;
+}
+
+table>tbody>tr>td.expandable {
+  padding: 0;
+}
+
+.more:hover {
+  transition: all 0.155s ease-out;
+  background-color: #eee ;
+}
+
+.secret {
+  height: 0px;
+  overflow: hidden;
+  padding: 0 8px 0 8px;
+  transition: all 0.155s ease-out;
+}
+
+.secret.reveal {
+  height: 200px;
+  padding: 8px;
 }
 
 .agenda-text {
