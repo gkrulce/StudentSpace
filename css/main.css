@@ -1,6 +1,11 @@
 body {
 	margin-top: 65px;
 }
+
+::selection {
+  background: rgb(255, 235, 199);
+}
+
 .fa-user {
 	padding-left: .2em;
 }
@@ -9,31 +14,52 @@ body {
 	padding-left: 1em;
 }
 
+.navbar-brand {
+  font: bold 18pt/18pt 'Indie Flower';
+  text-transform: uppercase;
+}
+
 th {
-	text-transform: uppercase;
-	color: #FFF;
-	background-color: #0034FF;
+  text-transform: uppercase;
+  color: #FFF;
+  background-color: #0088EA;
 }
 
 table>tbody>tr>td.expandable {
+  border: 0 solid #ff0000;
   padding: 0;
 }
 
-.more:hover {
-  transition: all 0.155s ease-out;
-  background-color: #eee ;
+.data-row {
+  transition: all 0.255s cubic-bezier(0,0,0.3,0.9);
+}
+
+.data-row.current {
+  background-color: rgb(255,212,80);
 }
 
 .secret {
-  height: 0px;
+  border: 0 none #fff !important;
+  border-image-width: 0 !important;
+  height: 0;
   overflow: hidden;
   padding: 0 8px 0 8px;
-  transition: all 0.155s ease-out;
+  transition: all 0.255s cubic-bezier(0,0,0.3,0.9);
 }
 
 .secret.reveal {
   height: 200px;
   padding: 8px;
+}
+
+@media screen and (min-width: 767px) {
+.data-row.current:hover {
+  background-color: rgb(255,193,35);
+}
+
+.data-row:hover {
+  background-color: #eee ;
+}
 }
 
 .agenda-text {

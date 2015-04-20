@@ -60,29 +60,27 @@
       <table class="table table-bordered">
         <tr>
           <th>Class Name</th>
+          <th>Title</th>
           <th>Group Size</th>
           <th>Date</th>
           <th>Time</th>
-          <th>More Information</th>
         </tr>
         <?php
           foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
           {
             $date = new DateTime($row['start_time']);
-            echo '<div>';
-            echo '<tr><td>' . $row['name'] . '</td><td>';
+            echo '<tr class="data-row"><td>' . $row['name'] . '</td>';
+            echo '<td>' . $row['short_desc'] . '</td>';
 
+            echo '<td>';
             for($i = 0 ; $i < $row['group_size']; $i++)
             {
               echo '<span class="fa fa-user"></span>';
             }
             echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
-            echo '<td class="more">lol</td>';
             echo '</tr>';
-            echo '<tr><td colspan="10" class="expandable"><div class="secret">Janky crap
-            hello is there anybody in there? just not if you can hear me. is there anyone
-            at home?<br><br>sun is shinin in the sky there aint a cloud in saight</div></td></tr>';
-            echo '</div>';
+            echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
+            $row['long_desc'] . '</div></td></tr>';
           }
         ?>
       </table>
@@ -119,7 +117,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
+    <script src="js/view.js"></script>
 
   </body>
 </html>
