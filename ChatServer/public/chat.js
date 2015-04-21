@@ -1,3 +1,8 @@
+/* BUGSS
+  query should return if we're in those classes not if it was sent by us.
+  Messages not getting added to scope variable correctly
+*/
+
 /* CLIENT SIDE Javascript */
 var socket = io();
 socket.on('connect', function() {
@@ -48,24 +53,37 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
   $scope.roomDict = [];
 
   socket.on('add rooms', function(msg) {
+    console.log("Adding rooms");
     for(var i = 0 ; i < msg.length ; i++) {
       msg[i]['messages'] = [];
     }
     $scope.rooms = $scope.rooms.concat(msg);
     $scope.$apply();
     for(var i = 0 ; i < msg.length ; i++) {
-      $scope.roomDict[msg[i]['uuid'] = i];
+      $scope.roomDict[msg[i]['uuid']] = i;
     }
-//IF SOMETHING IS NOT ALREADY ACTIVE
-    $('.gold-pills li:first').addClass('active');
-    $('.tab-pane:first').addClass('active');
+    
+    /* Sets the first pill to active and shows its content if all inactive  */
+    if(!$('.gold-pills .active').length) {
+      $('.gold-pills li:first').addClass('active');
+      $('.tab-pane:first').addClass('active');
+    }
   });
 
   socket.on('new messages', function(msg) {
+    console.log("New messages!!");
+    console.log(msg);
     for(var i = 0 ; i < msg.length ; i++) {
-      $scope.rooms[roomDict[msg[i]['uuid']]]['messages'].concat(msg);
+      var pos = $scope.roomDict[msg[i]['uuid']];
+      $scope.rooms[pos]['messages'] = $scope.rooms[pos]['messages'].concat(msg[i]);
+      //$scope.rooms[$scope.roomDict[msg[i]['uuid']]]['messages'].concat(msg);
     }
     $scope.$apply();
+  });
+
+  socket.on('disconnect', function() {
+    $scope.rooms = [];
+    $scope.roomDict = [];
   });
 
 }]);

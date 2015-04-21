@@ -47,9 +47,18 @@
     background-color: rgba(255, 219, 80, 1);
 }
 
-.input-field {
-  position: fixed;
+.input-box {
+  position: absolute;
   bottom:0;
-  margin: auto;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+.chat-area {
+  position: relative;
+}
+
+.full-height {
+  height: 100%;
+}
