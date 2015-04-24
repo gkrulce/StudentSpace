@@ -68,9 +68,9 @@
         <?php
           foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
           {
-            $date = new DateTime($row['start_time']);
-            echo '<tr class="data-row"><td>' . $row['name'] . '</td>';
-            echo '<td>' . $row['short_desc'] . '</td>';
+            $date = new DateTime($row['start_date_time']);
+            echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
+            echo '<td>' . $row['group_name'] . '</td>';
 
             echo '<td>';
             for($i = 0 ; $i < $row['group_size']; $i++)
@@ -100,8 +100,8 @@
         <?php
           foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
           {
-            $date = new DateTime($row['start_time']);
-            echo '<tr><td>' . $row['name'] . '</td><td>';
+            $date = new DateTime($row['start_date_time']);
+            echo '<tr><td>' . $row['group_name'] . '</td><td>';
 
             for($i = 0 ; $i < $row['group_size']; $i++)
             {

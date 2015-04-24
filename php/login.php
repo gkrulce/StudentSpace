@@ -3,7 +3,7 @@
   include('Student.php');
   $username=$_POST['user_name'];
   
-  $stmt = $db->prepare("SELECT * FROM users where user_name = :userName;");
+  $stmt = $db->prepare("SELECT * FROM users where username = :userName;");
   $stmt->bindParam(":userName", $username, PDO::PARAM_STR);
   $stmt->execute();
   $row = $stmt->fetch(PDO::FETCH_ASSOC);

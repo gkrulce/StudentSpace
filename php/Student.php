@@ -14,7 +14,7 @@ class Student
   /* Getter methods */
   public function getAllStudyGroups($db)
   {
-    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
   }
 
   public function getClasses($db)
@@ -35,15 +35,10 @@ class Student
   {
     /* An example of how to set up an associate array for this function 
     $assocArray = array();
-    $assocArray["start_date_time"] = "2015-01-01 12:00:00";
+    $assocArray["start_time"] = "2015-01-01 12:00:00";
     $assocArray["short_desc"] = "TEST2";
     $assocArray["long_desc"] = "TESTEST2";
     $assocArray["class_id"] = 8; */
-
-    $assocArray = array();
-    $assocArray['startTime'] = $arr['start_date_time'];
-    $assocArray['longDesc'] = $arr['long_desc'];
-    $assocArray['classId'] = $arr['class_id'];
 
     $sth = $db->prepare('INSERT INTO groups(name, hash) VALUES (:groupName, md5(rand()));');
 
@@ -57,6 +52,9 @@ class Student
 
     $groupId = $db->lastInsertId();
 
+    $assocArray['startTime'] = $arr['start_time'];
+    $assocArray['longDesc'] = $arr['long_desc'];
+    $assocArray['classId'] = $this->getGroupIdByHash($db, $arr['class_id']);
     $assocArray['groupId'] = $groupId;
 
     $sth = $db->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time) VALUES (:groupId, :classId, :longDesc, :startTime);');

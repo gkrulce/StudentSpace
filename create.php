@@ -52,18 +52,13 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
+<?php var_dump($_SESSION['user']); ?>
 
 <div class="container">
 <?php
   if(isset($_POST['submit_button']))
   {
-    $assocArray = array();
-    $assocArray['start_date_time'] = $_POST['date'] . ' ' . $_POST['start_time'];
-    $assocArray['short_desc'] = $_POST['short_desc'];
-    $assocArray['long_desc'] = $_POST['long_desc'];
-    $assocArray['class_id'] = $_POST['class_id'];
-    if($_SESSION['user']->createStudyGroup($db, $assocArray))
+    if($_SESSION['user']->createStudyGroup($db, $_POST))
     {
       echo '<div class="alert alert-success" role="alert">Study Group successfully created</div>';
     }else
@@ -107,7 +102,7 @@
 	  <?php
 		foreach($_SESSION['user']->getClasses($db) as $row)
 		{
-			echo '<option value="'. $row["id"].'">' . $row["name"] . '</option>';
+			echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
 		}
 	  ?>
 	</select>
