@@ -52,7 +52,6 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-<?php var_dump($_SESSION['user']); ?>
 
 <div class="container">
 <?php
