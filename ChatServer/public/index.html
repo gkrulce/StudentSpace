@@ -37,29 +37,13 @@
     <div class="row full-height">
       <div class="col-xs-2">
         <ul class="nav nav-pills nav-stacked gold-pills">
-            <li ng-repeat="r in rooms" role="presentation"><a href="#tab{{$index}}" data-toggle="tab">{{r.name}}</a></li>
+            <li ng-repeat="r in rooms" role="presentation"><a href="#tab{{$index}}" data-toggle="tab">{{r.group_name}}</a></li>
         </ul>
       </div>
       <div class="col-xs-10 chat-area full-height">
         <div class="tab-content">
-          <!--<div class="tab-pane active" id="tab1">
-            <div class="chat-block">
-              <div class="circle">G</div>
-              <div class="chat-bubble arrive">
-                  <p>
-                  This is a message that is really really long!!
-                  </p>
-              </div>
-            </div>
-            <div class="chat-bubble sent">
-                <p>
-                This is a message that is really really long!!
-                </p>
-            </div>
-          </div> -->
-
           <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
-            <h4 ng-repeat="m in r.messages"> Class: {{r.name}}.<br /> Messages: {{m.content}}. User: {{m.user_name}}. Time: {{m.time}}.  </h4>
+            <h4 ng-repeat="m in r.messages"> Class: {{r.group_name}}.<br /> Messages: {{m.message}}. User: {{m.username}}. Time: {{m.time}}.  </h4>
           </div>
 
         </div>

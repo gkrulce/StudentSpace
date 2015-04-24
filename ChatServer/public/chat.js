@@ -54,13 +54,14 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
 
   socket.on('add rooms', function(msg) {
     console.log("Adding rooms");
+    console.log(msg);
     for(var i = 0 ; i < msg.length ; i++) {
       msg[i]['messages'] = [];
     }
     $scope.rooms = $scope.rooms.concat(msg);
     $scope.$apply();
     for(var i = 0 ; i < msg.length ; i++) {
-      $scope.roomDict[msg[i]['uuid']] = i;
+      $scope.roomDict[msg[i]['group_id']] = i;
     }
     
     /* Sets the first pill to active and shows its content if all inactive  */
@@ -74,7 +75,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     console.log("New messages!!");
     console.log(msg);
     for(var i = 0 ; i < msg.length ; i++) {
-      var pos = $scope.roomDict[msg[i]['uuid']];
+      var pos = $scope.roomDict[msg[i]['group_id']];
       $scope.rooms[pos]['messages'] = $scope.rooms[pos]['messages'].concat(msg[i]);
       //$scope.rooms[$scope.roomDict[msg[i]['uuid']]]['messages'].concat(msg);
     }
