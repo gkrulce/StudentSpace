@@ -55,9 +55,12 @@
 
     <div class="container">
       <h2 class="text-center"> Current Study Groups! </h2>
+      <h3><i>note: we definitely want to move the join and current off one page.
+      Thinkin of making "dashboard" with reminders, etc. -rnlee</i></h3>
       <table class="table table-bordered">
         <tr>
           <th>Class Name</th>
+          <th>Title</th>
           <th>Group Size</th>
           <th>Date</th>
           <th>Time</th>
@@ -66,14 +69,18 @@
           foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
           {
             $date = new DateTime($row['start_time']);
-            echo '<tr><td>' . $row['name'] . '</td><td>';
+            echo '<tr class="data-row"><td>' . $row['name'] . '</td>';
+            echo '<td>' . $row['short_desc'] . '</td>';
 
+            echo '<td>';
             for($i = 0 ; $i < $row['group_size']; $i++)
             {
               echo '<span class="fa fa-user"></span>';
             }
             echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
             echo '</tr>';
+            echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
+            $row['long_desc'] . '</div></td></tr>';
           }
         ?>
       </table>
@@ -110,6 +117,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/view.js"></script>
 
   </body>
 </html>
