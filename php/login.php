@@ -11,7 +11,7 @@
   if($row)
   {
     session_start();
-    $_SESSION['user'] = new Student($row["id"], $row["user_name"]);
+    $_SESSION['user'] = new Student($row["pid"], $row["name"]);
     header('Location: ../view.php');
   }else
   {
