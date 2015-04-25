@@ -26,44 +26,52 @@ io.on('connection', function(socket){
   socket.on('login', function(msg) {
     //Verify no SQL injection
     console.log("User " + msg + " logged in!");
-    getUserInformation(msg);
-    getChatRooms(msg);
-    getMessages(msg);
+    getUserInformation(msg, socket);
+    getChatRooms(msg, socket);
+    getMessages(msg, socket);
 });
 
   socket.on('new message', function(msg) {
-   //TODO 
+    console.log("Received a message... sending!");
     console.log(msg);
     storeMessage(msg);
+    delete msg['user_id']
+//Maybe add the time here
+    msg = [msg];
+    console.log("Sending message to group: " + msg['group_id']);
+    io.to(msg['group_id']).emit('new messages', msg);
 });
 
 });
 
-function getUserInformation(uid) {
+function getUserInformation(uid, socket) {
   //VERIFY NO SQL INJECTION
   db.query('Select username from users WHERE hash="' + uid + '";', function(err, rows, fields) {
     if(rows != rows.length == 1)
     {
       var row = rows[0];
       console.log(row);
-      io.emit('user information', row["username"]);
+      socket.emit('user information', row["username"]);
       console.log("Sent user information to user " + uid);
     }
   });
 };
 
-function getChatRooms(uid) {
+function getChatRooms(uid, socket) {
   db.query('SELECT g.name group_name, g.hash group_id FROM users_to_groups ug JOIN groups g ON ug.group_id = g.id JOIN users u ON user_pid = u.pid WHERE u.hash = "' + uid + '";', function(err, rows, fields) {
     console.log(rows);
-    io.emit('add rooms', rows);
-    console.log("Sent class information to user " + uid);
+    socket.emit('add rooms', rows);
+    console.log("Sent class information to user " + uid + ". Now joining rooms.");
+    for(var i = 0 ; i < rows.length ; i++) {
+      socket.join(rows['group_id']);
+    }
 });
 };
 
-function getMessages(uid) {
+function getMessages(uid, socket) {
     db.query('SELECT g.name group_name, g.hash group_id, m.message, CASE m.isAnonymous WHEN 0 THEN u.username ELSE \'Anonymous\' END username, m.time FROM messages m JOIN users_to_groups ug ON m.group_id = ug.group_id JOIN groups g ON ug.group_id = g.id JOIN users u ON ug.user_pid = u.pid JOIN users u1 on ug.user_pid = u1.pid WHERE u1.hash = "' + uid + '";', function(err, rows, fields) {
     console.log(rows);
-    io.emit('new messages', rows);
+    socket.emit('new messages', rows);
     console.log("Sent class message information to user " + uid);
 });
 

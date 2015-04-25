@@ -50,15 +50,17 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
       console.log("Can't send a message if no chat rooms are active!!!");
     }else
     {
-      var message = {"message": $scope.inputText, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous, "group_id": $scope.rooms[loc]["group_id"]};
+    
+      var message = {"group_name": $scope.rooms[loc]["group_name"], "group_id": $scope.rooms[loc]["group_id"], "message": $scope.inputText, "username": $scope.username, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous};
+      if($scope.isAnonymous) {
+        message["username"] = "Anonymous";
+      }
       console.log("Sending message...");
       console.log( message);
       socket.emit('new message', message);
-      message["username"] =  $scope.username;
-      $scope.rooms[loc]['messages'] = $scope.rooms[loc]['messages'].concat(message);
-      console.log("Message sent. Rooms JSON...");
-      console.log($scope.rooms);
-      $scope.$apply();
+      //$scope.rooms[loc]['messages'] = $scope.rooms[loc]['messages'].concat(message);
+      //console.log("Message sent. Rooms JSON...");
+      //console.log($scope.rooms);
     }
 
   };
@@ -66,14 +68,12 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
   socket.on('add rooms', function(msg) {
     console.log("Adding rooms");
     console.log(msg);
-    for(var i = 0 ; i < msg.length ; i++) {
-      msg[i]['messages'] = [];
+    $scope.rooms = msg;
+    for(var i = 0 ; i < $scope.rooms.length ; i++) {
+      $scope.rooms[i]['messages'] = [];
+      $scope.roomDict[$scope.rooms[i]['group_id']] = i;
     }
-    $scope.rooms = $scope.rooms.concat(msg);
     $scope.$apply();
-    for(var i = 0 ; i < msg.length ; i++) {
-      $scope.roomDict[msg[i]['group_id']] = i;
-    }
     
     /* Sets the first pill to active and shows its content if all inactive  */
     if(!$('.gold-pills .active').length) {
