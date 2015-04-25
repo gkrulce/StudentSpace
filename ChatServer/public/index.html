@@ -47,7 +47,12 @@
           </div>
 
         </div>
-        <input type="text" class="input-box"/>
+        <form ng-submit="sendMessage()">
+          <div class="input-box">
+            <input type="text" ng-model="inputText" placeholder="Enter message here..."/>
+            <input class="btn btn-primary" type="submit" value="Send">
+          </div>
+        </form>
       </div>
     </div>
 

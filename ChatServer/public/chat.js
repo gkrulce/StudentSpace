@@ -5,22 +5,8 @@
 
 /* CLIENT SIDE Javascript */
 var socket = io();
-socket.on('connect', function() {
-  console.log('User connecting');
-  login();
-});
 
-var rooms;
 socket.on('user information', function(msg) {
-  console.log(msg);
-});
-
-socket.on('add rooms', function(msg) {
-  rooms = msg;
-});
-
-socket.on('new message', function(msg) {
-  console.log("new messages");
   console.log(msg);
 });
 
@@ -29,28 +15,53 @@ function test() {
   socket.emit('special', 'String');
 };
 
-/* The userid is passed as the id GET parameter */
-function login() {
-  var id = getParameterByName('id');
-  console.log("Logging in with id: " + id);
-  socket.emit('login', id);
-};
-
-/* Grabs the GET parameters */
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-};
 
 /* ANGULAR JS */
 
 var app = angular.module('Chat', []);
 
 app.controller('ChatCtrl', ['$scope', function($scope) {
+
   $scope.rooms = [];
   $scope.roomDict = [];
+  $scope.id = getParameterByName('id');
+  $scope.username;
+
+
+  socket.on('connect', function() {
+    console.log("Logging in with id: " + $scope.id);
+    socket.emit('login', $scope.id);
+  });
+
+
+  socket.on('user information', function(msg) {
+    $scope.username = msg;
+  });
+
+  $scope.sendMessage = function() {
+    var loc;
+    $('.gold-pills > li').each(function(index) {
+      if($(this).hasClass('active')) {
+        loc = index;
+      }
+    });
+
+    if(typeof loc == 'undefined') {
+      console.log("Can't send a message if no chat rooms are active!!!");
+    }else
+    {
+      var message = {"message": $scope.inputText, "user_id": $scope.id, "isAnonymous": 0, "group_id": $scope.rooms[loc]["group_id"]};
+      console.log("Sending message...");
+      console.log( message);
+      socket.emit('new message', message);
+      message["username"] =  $scope.username;
+      $scope.rooms[loc]['messages'] = $scope.rooms[loc]['messages'].concat(message);
+      console.log("Message sent. Rooms JSON...");
+      console.log($scope.rooms);
+      $scope.$apply();
+    }
+
+  };
 
   socket.on('add rooms', function(msg) {
     console.log("Adding rooms");
@@ -86,5 +97,13 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     $scope.rooms = [];
     $scope.roomDict = [];
   });
+
+  /* Grabs the GET parameters */
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  };
 
 }]);
