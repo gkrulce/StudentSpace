@@ -26,7 +26,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
   $scope.roomDict = [];
   $scope.id = getParameterByName('id');
   $scope.username;
-
+  $scope.isAnonymous = false;
 
   socket.on('connect', function() {
     console.log("Logging in with id: " + $scope.id);
@@ -50,7 +50,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
       console.log("Can't send a message if no chat rooms are active!!!");
     }else
     {
-      var message = {"message": $scope.inputText, "user_id": $scope.id, "isAnonymous": 0, "group_id": $scope.rooms[loc]["group_id"]};
+      var message = {"message": $scope.inputText, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous, "group_id": $scope.rooms[loc]["group_id"]};
       console.log("Sending message...");
       console.log( message);
       socket.emit('new message', message);
