@@ -43,14 +43,17 @@
       <div class="col-xs-10 chat-area full-height">
         <div class="tab-content">
           <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
+
             <div class="chat-block" ng-repeat="m in r.messages">
-              <div class="chat-bubble sent" ng-if="m.username = username">
+              <div class="chat-bubble sent" ng-if="m.username == username">
                 <p>{{m.message}}</p>
               </div>
-              <div class="chat-bubble arrive" ng-if="m.username != username">
+
+              <div class="chat-bubble arrive" ng-if="m.username !== username">
                 <p>{{m.message}}</p>
               </div>
             </div>
+
           </div>
 
           <!--<div class="tab-pane active" id="tab0">
