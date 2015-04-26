@@ -53,7 +53,7 @@
       </div>
     </nav>
 
-  <iframe class="chat-iframe full-height" src="http://54.67.21.70:3000?id=e72e6321970dd36fe5b25025297bc209"></iframe>
+  <iframe class="chat-iframe full-height" src="http://54.67.21.70:3000?id=<?php echo $_SESSION['user']->getHash() ?>"></iframe>
     
 
     <!-- Bootstrap core JavaScript -->

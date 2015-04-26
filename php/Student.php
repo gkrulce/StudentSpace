@@ -3,15 +3,21 @@ class Student
 { 
   private $pid;
   private $name;
+  private $hash;
 
   /* Constructor */
-  public function __construct($pid, $name)
+  public function __construct($pid, $name, $hash)
   {
     $this->pid = $pid;
     $this->name = $name;
+    $this->hash = $hash;
   }
 
   /* Getter methods */
+  public function getHash()
+  {
+    return $this->hash;
+  }
   public function getAllStudyGroups($db)
   {
     return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
