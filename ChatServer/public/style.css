@@ -16,7 +16,8 @@
 
 .arrive {
   margin: 10px 100px 10px 50px;
-  background: #EBEBEB;
+  /*background: #EBEBEB;*/
+  background: Gray;
 }
 
 .sent {

@@ -33,13 +33,18 @@ io.on('connection', function(socket){
 
   socket.on('new message', function(msg) {
     console.log("Received a message... sending!");
-    console.log(msg);
+    //console.log(msg);
     storeMessage(msg);
     delete msg['user_id']
 //Maybe add the time here
+    var group_id = msg['group_id'];
+    console.log("Sending message to group: " + group_id);
     msg = [msg];
-    console.log("Sending message to group: " + msg['group_id']);
-    io.to(msg['group_id']).emit('new messages', msg);
+
+    console.log("WE ARE SENDING THIS INFORMATION. NOTHING CHANGES");
+    console.log(msg);
+
+    io.to(group_id).emit('new messages', msg);
 });
 
 });
@@ -63,13 +68,14 @@ function getChatRooms(uid, socket) {
     socket.emit('add rooms', rows);
     console.log("Sent class information to user " + uid + ". Now joining rooms.");
     for(var i = 0 ; i < rows.length ; i++) {
-      socket.join(rows['group_id']);
+      //console.log(rows[i]['group_id']);
+      socket.join(rows[i]['group_id']);
     }
 });
 };
 
 function getMessages(uid, socket) {
-    db.query('SELECT g.name group_name, g.hash group_id, m.message, CASE m.isAnonymous WHEN 0 THEN u.username ELSE \'Anonymous\' END username, m.time FROM messages m JOIN users_to_groups ug ON m.group_id = ug.group_id JOIN groups g ON ug.group_id = g.id JOIN users u ON ug.user_pid = u.pid JOIN users u1 on ug.user_pid = u1.pid WHERE u1.hash = "' + uid + '";', function(err, rows, fields) {
+    db.query('SELECT g.name group_name, g.hash group_id, m.message, CASE m.isAnonymous WHEN 0 THEN u.username ELSE \'Anonymous\' END username, m.time FROM messages m JOIN users_to_groups ug ON m.group_id = ug.group_id JOIN groups g ON ug.group_id = g.id JOIN users u ON m.user_pid = u.pid JOIN users u1 on ug.user_pid = u1.pid WHERE u1.hash = "' + uid + '";', function(err, rows, fields) {
     console.log(rows);
     socket.emit('new messages', rows);
     console.log("Sent class message information to user " + uid);

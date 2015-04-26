@@ -43,8 +43,31 @@
       <div class="col-xs-10 chat-area full-height">
         <div class="tab-content">
           <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
-            <h4 ng-repeat="m in r.messages"> Class: {{r.group_name}}.<br /> Messages: {{m.message}}. User: {{m.username}}. Time: {{m.time}}.  </h4>
+            <div class="chat-block" ng-repeat="m in r.messages">
+              <div class="chat-bubble sent" ng-if="m.username = username">
+                <p>{{m.message}}</p>
+              </div>
+              <div class="chat-bubble arrive" ng-if="m.username != username">
+                <p>{{m.message}}</p>
+              </div>
+            </div>
           </div>
+
+          <!--<div class="tab-pane active" id="tab0">
+            <div class="chat-block">
+              <div class="circle">G</div>
+              <div class="chat-bubble arrive">
+                  <p>
+                  This is a message that is really really long!!
+                  </p>
+              </div>
+            </div>
+            <div class="chat-bubble sent">
+                <p>
+                This is a message that is really really long!!
+                </p>
+            </div>
+          </div>-->
 
         </div>
         <form onsubmit="this.reset() ; return false;" ng-submit="sendMessage()" >

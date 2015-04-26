@@ -6,16 +6,6 @@
 /* CLIENT SIDE Javascript */
 var socket = io();
 
-socket.on('user information', function(msg) {
-  console.log(msg);
-});
-
-function test() {
-  console.log('Test');
-  socket.emit('special', 'String');
-};
-
-
 /* ANGULAR JS */
 
 var app = angular.module('Chat', []);
@@ -25,7 +15,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
   $scope.rooms = [];
   $scope.roomDict = [];
   $scope.id = getParameterByName('id');
-  $scope.username;
+  $scope.userName = "";
   $scope.isAnonymous = false;
 
   socket.on('connect', function() {
@@ -35,7 +25,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
 
 
   socket.on('user information', function(msg) {
-    $scope.username = msg;
+    $scope.userName = msg;
   });
 
   $scope.sendMessage = function() {
@@ -51,7 +41,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     }else
     {
     
-      var message = {"group_name": $scope.rooms[loc]["group_name"], "group_id": $scope.rooms[loc]["group_id"], "message": $scope.inputText, "username": $scope.username, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous};
+      var message = {"group_name": $scope.rooms[loc]["group_name"], "group_id": $scope.rooms[loc]["group_id"], "message": $scope.inputText, "username": $scope.userName, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous};
       if($scope.isAnonymous) {
         message["username"] = "Anonymous";
       }
