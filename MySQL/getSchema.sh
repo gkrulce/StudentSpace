@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mysqldump -d -h localhost -u root StudyTreev2 > Schema.sql -p
+mysqldump -d -h localhost -u root StudyTree > Schema.sql -p

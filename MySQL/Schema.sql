@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: StudyTreev2
+-- Host: localhost    Database: StudyTree
 -- ------------------------------------------------------
 -- Server version	5.5.41-0ubuntu0.14.04.1-log
 
@@ -42,7 +42,7 @@ CREATE TABLE `groups` (
   `name` varchar(255) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,14 +57,14 @@ CREATE TABLE `messages` (
   `group_id` int(11) NOT NULL,
   `user_pid` char(9) NOT NULL,
   `message` text,
-  `time` datetime DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isAnonymous` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`),
   KEY `user_pid` (`user_pid`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_pid`) REFERENCES `users` (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27282 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +98,7 @@ CREATE TABLE `users` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `hash` char(32) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -128,4 +129,4 @@ CREATE TABLE `users_to_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-24  1:46:01
+-- Dump completed on 2015-04-26  3:55:23
