@@ -25,7 +25,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="ChatServer/public/style.css">
+    <link rel="stylesheet" href="css/chat.css">
 
 
     <!-- Angular JS -->
@@ -39,7 +39,7 @@
     </script>
 
     <!-- Chat Javascript -->
-    <script src="ChatServer/public/chat.js"></script>
+    <script src="js/chat.js"></script>
 
   </head>
 
