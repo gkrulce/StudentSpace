@@ -4,17 +4,17 @@
 */
 
 /* CLIENT SIDE Javascript */
-var socket = io();
+var socket = io(":3000");
 
 /* ANGULAR JS */
 
-var app = angular.module('Chat', []);
+var app = angular.module('ChatApp', []);
 
 app.controller('ChatCtrl', ['$scope', function($scope) {
 
   $scope.rooms = [];
   $scope.roomDict = [];
-  $scope.id = getParameterByName('id');
+  $scope.id = userId;
   $scope.username = "";
   $scope.isAnonymous = false;
 

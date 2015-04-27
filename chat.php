@@ -3,7 +3,7 @@
   include('php/db.php');
 ?>
 <!DOCTYPE html>
-<html lang="en" class="full-height">
+<html lang="en" class="full-height" ng-app="ChatApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +25,21 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="ChatServer/public/style.css">
+
+
+    <!-- Angular JS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+    <!-- Socket IO JavaScript -->
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+    <script>
+      var userId = "<?php echo $_SESSION['user']->getHash() ?>";
+    </script>
+
+    <!-- Chat Javascript -->
+    <script src="ChatServer/public/chat.js"></script>
 
   </head>
 
@@ -53,7 +68,39 @@
       </div>
     </nav>
 
-  <iframe class="chat-iframe full-height" src="http://54.67.21.70:3000?id=<?php echo $_SESSION['user']->getHash() ?>"></iframe>
+  <body ng-controller="ChatCtrl" class="full-height">
+
+    <div class="row full-height">
+      <div class="col-xs-2">
+        <ul class="nav nav-pills nav-stacked gold-pills">
+            <li ng-repeat="r in rooms" role="presentation"><a href="#tab{{$index}}" data-toggle="tab">{{r.group_name}}</a></li>
+        </ul>
+      </div>
+      <div class="col-xs-10 chat-area full-height">
+        <div class="tab-content">
+          <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
+
+            <div class="chat-block" ng-repeat="m in r.messages">
+              <div class="chat-bubble sent" ng-if="m.username == username">
+                <p>{{m.message}}</p>
+              </div>
+
+              <div class="chat-bubble arrive" ng-if="m.username !== username">
+                <p>{{m.message}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <form onsubmit="this.reset() ; return false;" ng-submit="sendMessage()" >
+          <div class="input-box">
+            <input type="text" ng-model="inputText" placeholder="Enter message here..."/>
+            <input class="btn btn-primary" type="submit" value="Send">
+            <input type="checkbox" ng-model="isAnonymous"> Send Anonymously
+          </div>
+        </form>
+      </div>
+    </div>
     
 
     <!-- Bootstrap core JavaScript -->
