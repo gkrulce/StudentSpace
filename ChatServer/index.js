@@ -74,8 +74,9 @@ io.on('connection', function(socket){
 });
 
 function getUserInformation(uid, socket) {
-  //VERIFY NO SQL INJECTION
-  db.query('Select username from users WHERE hash="' + uid + '";', function(err, rows, fields) {
+  var sql = 'SELECT username FROM users WHERE hash=?;';
+  sql = mysql.format(sql, uid);
+  db.query(sql, function(err, rows, fields) {
     if(rows != rows.length == 1)
     {
       var row = rows[0];
@@ -87,7 +88,9 @@ function getUserInformation(uid, socket) {
 };
 
 function getChatRooms(uid, socket) {
-  db.query('SELECT g.name group_name, g.hash group_id FROM users_to_groups ug JOIN groups g ON ug.group_id = g.id JOIN users u ON user_pid = u.pid WHERE u.hash = "' + uid + '";', function(err, rows, fields) {
+  var sql = 'SELECT g.name group_name, g.hash group_id FROM users_to_groups ug JOIN groups g ON ug.group_id = g.id JOIN users u ON user_pid = u.pid WHERE u.hash = ?;';
+  sql = mysql.format(sql, uid);
+  db.query(sql, function(err, rows, fields) {
     console.log(rows);
     socket.emit('add rooms', rows);
     console.log("Sent class information to user " + uid + ". Now joining rooms.");
@@ -99,10 +102,12 @@ function getChatRooms(uid, socket) {
 };
 
 function getMessages(uid, socket) {
-    db.query('SELECT g.name group_name, g.hash group_id, m.message, CASE m.isAnonymous WHEN 0 THEN u.username ELSE \'Anonymous\' END username, m.time FROM messages m JOIN users_to_groups ug ON m.group_id = ug.group_id JOIN groups g ON ug.group_id = g.id JOIN users u ON m.user_pid = u.pid JOIN users u1 on ug.user_pid = u1.pid WHERE u1.hash = "' + uid + '";', function(err, rows, fields) {
-    console.log(rows);
-    socket.emit('new messages', rows);
-    console.log("Sent class message information to user " + uid);
+  var sql = 'SELECT g.name group_name, g.hash group_id, m.message, CASE m.isAnonymous WHEN 0 THEN u.username ELSE \'Anonymous\' END username, m.time FROM messages m JOIN users_to_groups ug ON m.group_id = ug.group_id JOIN groups g ON ug.group_id = g.id JOIN users u ON m.user_pid = u.pid JOIN users u1 on ug.user_pid = u1.pid WHERE u1.hash = ?;';
+  sql = mysql.format(sql, uid);  
+  db.query(sql, function(err, rows, fields) {
+  console.log(rows);
+  socket.emit('new messages', rows);
+  console.log("Sent class message information to user " + uid);
 });
 
 };
@@ -110,15 +115,21 @@ function getMessages(uid, socket) {
 function storeMessage(msg) {
   var pid;
   var gid;
-  db.query('SELECT pid FROM users WHERE hash = "' + msg["user_id"] + '";', function(err, rows, fields) {
+  var sql = 'SELECT pid FROM users WHERE hash = ?;';
+  sql = mysql.format(sql, msg['user_id']);
+  db.query(sql, function(err, rows, fields) {
     console.log(rows);
     if(rows.length == 1) {
       pid = rows[0]['pid'];
-      db.query('SELECT id FROM groups where hash = "' + msg["group_id"] + '";', function(err, rows, fields) {
+      sql = 'SELECT id FROM groups where hash = ?;';
+      sql = mysql.format(sql, msg['group_id']);
+      db.query(sql, function(err, rows, fields) {
         console.log(rows);
         if(rows.length == 1) {
           gid = rows[0]['id'];
-          db.query('INSERT INTO messages (group_id, user_pid, message, isAnonymous) VALUES (' + gid + ', "' + pid + '", "' + msg['message'] + '", ' + msg['isAnonymous'] + ');', function(err, rows, fields) {
+          sql = 'INSERT INTO messages (group_id, user_pid, message, isAnonymous) VALUES (' + gid + ', "' + pid + '", ?, ?);';
+          sql = mysql.format(sql, [msg['message'], msg['isAnonymous']]);
+          db.query(sql, function(err, rows, fields) {
             console.log(rows);
             if(!err)
             {
