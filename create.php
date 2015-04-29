@@ -55,86 +55,97 @@
 
 <div class="container">
 <?php
+
+  function validateDate($date, $format)
+  {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
+  }
+
   if(isset($_POST['submit_button']))
   {
-    if($_SESSION['user']->createStudyGroup($db, $_POST))
+    if(!validateDate($_POST['date'], 'Y-m-d'))
     {
-      echo '<div class="alert alert-success" role="alert">Study Group successfully created</div>';
+      echo '<div class="alert alert-danger" role="alert">The date must be given in the format YYYY-MM-DD (You gave ' . $_POST['date'] . ') </div>';
+    } else if(!validateDate($_POST['start_time'], 'H:i'))
+    {
+      echo '<div class="alert alert-danger" role="alert">The time must be given in the format HH:MM (You gave ' . $_POST['start_time'] . ') </div>';
+    }else if($_SESSION['user']->createStudyGroup($db, $_POST))
+    {
+      echo '<div class="alert alert-success" role="alert">Study Group successfully created. Go to the chat and introduce yourself!</div>';
+      unset($_POST);
     }else
     {
       echo '<div class="alert alert-danger" role="alert">There was an error upon study group creation. Sorry!</div>';
     }
-    unset($_POST);
   }
 ?>
-<h2 class="text-center"> Can't find a Study Group? </h2>
-<form action = "create.php" method="post" class="form-horizontal">
-    <fieldset>
+  <div class="create-form">
+    <h2> Create your own study group to study at YOUR convenience! </h2>
+    <form action = "create.php" method="post" class="form-horizontal">
+        <fieldset>
 
-    <!-- Form Name -->
-    <legend>Make your own!</legend>
+        <!-- Date input-->
+        <div class="control-group">
+          <label class="control-label" for="dateid">Date</label>
+          <div class="controls">
+            <input type="date" id = "dateid" name="date" value="<?php if (isset($_POST['date'])) { echo $_POST['date']; } else { echo date('Y-m-d'); } ?>" class="input-xlarge">
+          </div>
+        </div>
 
-    <!-- Date input-->
-    <div class="control-group">
-      <label class="control-label" for="dateid">Date</label>
-      <div class="controls">
-	<input type="date" id = "dateid" name="date" value="<?php echo date('Y-m-d'); ?>" class="input-xlarge">
-	<p class="help-block">Pick a convenient date proximate to class events</p>
-      </div>
-    </div>
+        <!-- Start time input-->
+        <div class="control-group">
+          <label class="control-label" for="startTimeId">Start Time</label>
+          <div class="controls">
+            <input type="time" value="<?php if(isset($_POST['start_time'])) {echo $_POST['start_time'];} else {echo "20:00";} ?>" name="start_time" id="startTimeId" class="input-xlarge" step=900>
+          </div>
+        </div>
 
-    <!-- Start time input-->
-    <div class="control-group">
-      <label class="control-label" for="startTimeId">Start Time</label>
-      <div class="controls">
-	<input type="time" name="start_time" id="startTimeId" class="input-xlarge" step=900>
-	<p class="help-block">Study groups do not need an end time</p>
-      </div>
-    </div>
+        <!-- Class selection -->
+        <div class="control-group">
+          <label class="control-label" for="classSelectId">Class</label>
+          <div class="controls">
+      <select id="classSelectId" name="class_id" class="input-xlarge">
 
-    <!-- Class selection -->
-    <div class="control-group">
-      <label class="control-label" for="classSelectId">Class Selection</label>
-      <div class="controls">
-	<select id="classSelectId" name="class_id" class="input-xlarge">
+        <?php
+        foreach($_SESSION['user']->getClasses($db) as $row)
+        {
+          echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
+        }
+        ?>
+      </select>
+          </div>
+        </div>
 
-	  <?php
-		foreach($_SESSION['user']->getClasses($db) as $row)
-		{
-			echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
-		}
-	  ?>
-	</select>
-      </div>
-    </div>
+        <!-- Title input-->
+        <div class="control-group">
+          <label class="control-label" for="shortTitle">Title</label>
+          <div class="controls">
+            <input id="shortTitle" name="short_desc" type="text" class="input-xlarge" placeholder="eg. Midterm 1 or Homework 2" size="25" value = "<?php if(isset($_POST['short_desc'])) {echo $_POST['short_desc'];} ?>">
+            <p class="help-block"> What are you studying?</p>
+          </div>
+        </div>
 
-    <!-- Title input-->
-    <div class="control-group">
-      <label class="control-label" for="shortTitle">Title</label>
-      <div class="controls">
-        <input id="shortTitle" name="short_desc" type="text" class="input-xlarge">
-        <p class="help-block"> What are you studying?</p>
-      </div>
-    </div>
+        <!-- Angenda input -->
+        <div class="control-group">
+          <label class="control-label" for="agenda">Agenda</label>
+          <div class="controls">                     
+            <textarea id="agenda" name="long_desc" class="agenda-text" placeholder="eg. Solve homework problems or quiz each other on vocabulary terms."><?php if(isset($_POST['long_desc'])) {echo $_POST['long_desc'];} ?></textarea>
+            <p class="help-block">  How are you studying? List a few specific actions you want to accomplish during this study group.</p>
+          </div>
+        </div>
 
-    <!-- Angenda input -->
-    <div class="control-group">
-      <label class="control-label" for="agenda">Agenda</label>
-      <div class="controls">                     
-        <textarea id="agenda" name="long_desc" class="agenda-text">Plan how you will study here. Planning ahead improves study group success.</textarea>
-      </div>
-    </div>
+        <!-- Submit Button -->
+        <div class="control-group">
+          <div class="controls">
+      <br>
+      <button id="singlebutton" name="submit_button" class="btn btn-primary" type="submit">Submit!</button>
+          </div>
+        </div>
 
-    <!-- Submit Button -->
-    <div class="control-group">
-      <div class="controls">
-	<br>
-	<button id="singlebutton" name="submit_button" class="btn btn-primary" type="submit">Submit!</button>
-      </div>
-    </div>
-
-    </fieldset>
-</form>
+        </fieldset>
+    </form>
+  </div>
 </div>
     
 

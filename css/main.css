@@ -67,11 +67,10 @@ table>tbody>tr>td.expandable {
   height:100px;
 }
 
-.chat-iframe {
-  width: 100%;
-  border:none;
-}
-
 .full-height {
   height: 100%;
+}
+
+.create-form{
+  margin: 0 auto 0 auto;
 }

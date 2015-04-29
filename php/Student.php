@@ -58,7 +58,7 @@ class Student
 
     $groupId = $db->lastInsertId();
 
-    $assocArray['startTime'] = $arr['start_time'];
+    $assocArray['startTime'] = $arr['date'] . ' ' . $arr['start_time'];
     $assocArray['longDesc'] = $arr['long_desc'];
     $assocArray['classId'] = $this->getGroupIdByHash($db, $arr['class_id']);
     $assocArray['groupId'] = $groupId;
@@ -106,7 +106,6 @@ class Student
   {
 
     $groupId = $this->getGroupIdByHash($db, $groupHash);
-var_dump($groupId);
 
     $sth = $db->prepare('INSERT INTO users_to_groups (user_pid, group_id) VALUES (:userPID, :groupId);');
     $sth->bindParam(':userPID', $this->pid, PDO::PARAM_STR);
