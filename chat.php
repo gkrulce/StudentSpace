@@ -92,9 +92,9 @@
 
           </div>
         </div>
-        <form onsubmit="this.reset() ; return false;" ng-submit="sendMessage()" >
+        <form onsubmit="chatReset(); return false;" ng-submit="sendMessage()" >
           <div class="input-box">
-            <input type="text" ng-model="inputText" placeholder="Enter message here..."/>
+            <input class="resetOnSubmit" type="text" ng-model="inputText" placeholder="Enter message here..."/>
             <input class="btn btn-primary" type="submit" value="Send">
             <input type="checkbox" ng-model="isAnonymous"> Send Anonymously
           </div>

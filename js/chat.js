@@ -1,7 +1,7 @@
-/* BUGSS
-  query should return if we're in those classes not if it was sent by us.
-  Messages not getting added to scope variable correctly
-*/
+function chatReset() {
+  $(".resetOnSubmit").val("");
+}
+
 
 /* CLIENT SIDE Javascript */
 var socket = io(":3000");
