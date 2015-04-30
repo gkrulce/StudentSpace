@@ -1,0 +1,69 @@
+.circle {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: Green;
+  font-size: 20pt;
+  text-align: center;
+  vertical-align: middle; 
+  padding: 2px;
+  display: inline-block;
+  color: #FFF;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.arrive {
+  margin: 10px 100px 10px 50px;
+  /*background: #EBEBEB;*/
+  background: Gray;
+}
+
+.sent {
+  margin: 10px 10px 10px 100px;
+  background: #0084FF; 
+  color: #FFF;
+  float:right;
+}
+
+.chat-bubble {
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 12pt;
+  width: 50%;
+}
+
+.chat-block {
+  display: block;
+  position: relative;
+}
+
+.gold-pills > li.active > a,
+.gold-pills > li.active > a:focus {
+    background-color: rgba(255, 201, 31, 1);
+}
+
+.gold-pills > li.active > a:hover {
+    background-color: rgba(255, 219, 80, 1);
+}
+
+.input-box {
+  position: fixed;
+  bottom:0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-area {
+  position: relative;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
