@@ -81,30 +81,34 @@
   }
 ?>
   <div class="create-form">
-    <h2> Create your own study group to study at YOUR convenience! </h2>
-    <form action = "create.php" method="post" class="form-horizontal">
-        <fieldset>
+  <form action="create.php" method="post" class="form-horizontal">
+  <fieldset>
 
-        <!-- Date input-->
-        <div class="control-group">
-          <label class="control-label" for="dateid">Date</label>
-          <div class="controls">
-            <input type="date" id = "dateid" name="date" value="<?php if (isset($_POST['date'])) { echo $_POST['date']; } else { echo date('Y-m-d'); } ?>" class="input-xlarge">
-          </div>
-        </div>
+  <!-- Form Name -->
+  <legend>Create your own study group to study at YOUR convenience!</legend>
 
-        <!-- Start time input-->
-        <div class="control-group">
-          <label class="control-label" for="startTimeId">Start Time</label>
-          <div class="controls">
-            <input type="time" value="<?php if(isset($_POST['start_time'])) {echo $_POST['start_time'];} else {echo "20:00";} ?>" name="start_time" id="startTimeId" class="input-xlarge" step=900>
-          </div>
-        </div>
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="date">Date</label>  
+    <div class="col-md-4">
+      <input id="date" name="date" type="date" class="form-control input-md" required="" value="<?php if (isset($_POST['date'])) { echo $_POST['date']; } else { echo date('Y-m-d'); } ?>">
+    <span class="help-block">Which day do you want to meet?</span>  
+    </div>
+  </div>
 
-        <!-- Class selection -->
-        <div class="control-group">
-          <label class="control-label" for="classSelectId">Class</label>
-          <div class="controls">
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="start_time">Start Time</label>  
+    <div class="col-md-4">
+      <input id="start_time" name="start_time" type="time" class="form-control input-md" required="" value="<?php if(isset($_POST['start_time'])) {echo $_POST['start_time'];} else {echo "20:00";} ?>" step=900>
+    <span class="help-block">What time do you want to meet?</span>  
+    </div>
+  </div>
+
+  <!-- Select Basic -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="class_id">Class</label>
+    <div class="col-md-4">
       <select id="classSelectId" name="class_id" class="input-xlarge">
 
         <?php
@@ -114,37 +118,39 @@
         }
         ?>
       </select>
-          </div>
-        </div>
+    </div>
+  </div>
 
-        <!-- Title input-->
-        <div class="control-group">
-          <label class="control-label" for="shortTitle">Title</label>
-          <div class="controls">
-            <input id="shortTitle" name="short_desc" type="text" class="input-xlarge" placeholder="eg. Midterm 1 or Homework 2" size="25" value = "<?php if(isset($_POST['short_desc'])) {echo $_POST['short_desc'];} ?>">
-            <p class="help-block"> What are you studying?</p>
-          </div>
-        </div>
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="shortTitle">Title</label>  
+    <div class="col-md-4">
+      <input id="shortTitle" name="short_desc" type="text" placeholder="eg. Midterm 1 or Homework 2" class="form-control input-md" required="" value="<?php if(isset($_POST['short_desc'])) {echo $_POST['short_desc'];} ?>">
+    <span class="help-block">What are you studying?</span>  
+    </div>
+  </div>
 
-        <!-- Angenda input -->
-        <div class="control-group">
-          <label class="control-label" for="agenda">Agenda</label>
-          <div class="controls">                     
-            <textarea id="agenda" name="long_desc" class="agenda-text" placeholder="eg. Solve homework problems or quiz each other on vocabulary terms."><?php if(isset($_POST['long_desc'])) {echo $_POST['long_desc'];} ?></textarea>
-            <p class="help-block">  How are you studying? List a few specific actions you want to accomplish during this study group.</p>
-          </div>
-        </div>
+  <!-- Textarea -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textarea">Agenda</label>
+    <div class="col-md-4">                     
+      <textarea class="form-control" id="agenda" name="long_desc" placeholder="eg. Solve homework problems or quiz each other on vocabulary terms."><?php if(isset($_POST['long_desc'])) {echo $_POST['long_desc'];} ?></textarea>
+      <span class="help-block">How are you studying? List a few specific actions you want to accomplish during this study group.</span>  
+    </div>
+  </div>
 
-        <!-- Submit Button -->
-        <div class="control-group">
-          <div class="controls">
-      <br>
-      <button id="singlebutton" name="submit_button" class="btn btn-primary" type="submit">Submit!</button>
-          </div>
-        </div>
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="submit_button"></label>
+    <div class="col-md-4">
+      <button id="submit_button" name="submit_button" class="btn btn-primary">Create</button>
+    </div>
+  </div>
 
-        </fieldset>
-    </form>
+  </fieldset>
+  </form>
+
+
   </div>
 </div>
     
