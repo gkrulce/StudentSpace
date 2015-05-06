@@ -25,7 +25,7 @@ class Student
 
   public function getClasses($db)
   {
-    return $db->query('SELECT g.name class_name, g.hash AS class_id FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN class_groups cg ON g.id = cg.id WHERE u.pid = \'' . $this->pid .'\';');
+    return $db->query('SELECT g.name class_name, g.hash AS class_id, ug.desires_email FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN class_groups cg ON g.id = cg.id WHERE u.pid = \'' . $this->pid .'\';');
   }
 
   public function getCurrentStudyGroups($db)
@@ -112,6 +112,30 @@ class Student
     $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
 
     return $sth->execute();
+  }
+
+  public function updateEmailPreferences($db, $arr) {
+    //TODO TRANSACTION IT
+    // Another funcrtion for getting email preferences
+    $db->query('UPDATE users_to_groups ug JOIN class_groups c ON ug.group_id = c.id SET ug.desires_email = 0 WHERE ug.user_pid = "' . $this->pid . '";');
+
+    $holders = array();
+    foreach($arr as $row) {
+      $holders[] = "?";
+    }
+
+    $sth = $db->prepare('UPDATE users_to_groups ug JOIN groups g ON ug.group_id = g.id SET ug.desires_email = 1  where ug.user_pid = "' . $this->pid . '" AND g.hash IN (' . implode(', ', $holders) . ');');
+
+    return $sth->execute($arr);
+
+    /*var_dump('UPDATE users_to_groups ug JOIN groups g ON ug.group_id = g.id SET ug.desires_email = 1  where ug.user_pid = "' . $this->pid . '" AND g.hash IN ("' . implode('","', $arr) . '");');
+
+    $sth = $db->prepare('SELECT * FROM users u where u.id IN (?, ?)');
+    $tmp = array();
+    $tmp[0] = "A11541442";
+    $tmp[1] = "A11111111";
+
+    $sth->bindParam*/
   }
 
 }
