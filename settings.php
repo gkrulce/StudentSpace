@@ -72,7 +72,6 @@ if(isset($_POST['singlebutton'])) {
       <legend>Email settings!</legend>
 
       <!-- Multiple Checkboxes -->
-<!-- VALUE SHOULD BE THE CLASS HASH VALUE -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="emailPref">Be emailed when new groups are created</label>
         <div class="col-md-4">
@@ -80,7 +79,11 @@ if(isset($_POST['singlebutton'])) {
           <?php
             $i = 0;
             foreach($_SESSION['user']->getClasses() as $row) {
-              echo '<div class="checkbox"><label for="emailPref-' . $i . '"><input type="checkbox" name="emailPref[]" id="emailPref-' . $i . '" value="' . $row['class_id'] . '">' . $row['class_name'] . '</label></div>';
+              echo '<div class="checkbox"><label for="emailPref-' . $i . '"><input type="checkbox" name="emailPref[]" id="emailPref-' . $i . '" value="' . $row['class_id'] . '"';
+              if($row["desires_email"] == "1") {
+                echo ' checked';
+              }
+              echo'>' . $row['class_name'] . '</label></div>';
               $i++;
             }
           ?>
