@@ -1,4 +1,5 @@
 <?php
+//NEED TO DECOUPLE DB FROM THIS CLASS
 include('db.php');
 class Student
 { 
@@ -47,48 +48,53 @@ class Student
     $assocArray["long_desc"] = "TESTEST2";
     $assocArray["class_id"] = 8; */
 
-    $sth = $GLOBALS['db']->prepare('INSERT INTO groups(name, hash) VALUES (:groupName, md5(rand()));');
+    $db = new PDO($GLOBALS['dbn'], $GLOBALS['dbusr'], $GLOBALS['dbpass']);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+      $db->beginTransaction();
+      $sth = $db->prepare('INSERT INTO groups(name, hash) VALUES (:groupName, md5(rand()));');
 
-    $sth->bindParam(':groupName', $arr['short_desc'], PDO::PARAM_STR);
-    $result = $sth->execute();
+      $sth->bindParam(':groupName', $arr['short_desc'], PDO::PARAM_STR);
+      $sth->execute();
 
+      $groupId = $db->lastInsertId();
 
-    if(!$result) {
+      $assocArray['startTime'] = $arr['date'] . ' ' . $arr['start_time'];
+      $assocArray['longDesc'] = $arr['long_desc'];
+      $assocArray['classId'] = $this->getGroupIdByHash($arr['class_id']);
+      $assocArray['groupId'] = $groupId;
+
+      $sth = $db->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time) VALUES (:groupId, :classId, :longDesc, :startTime);');
+      $sth->execute($assocArray);
+      $groupHash = $this->getGroupHashById($groupId, $db);
+      $result = $this->joinStudyGroup($groupHash, $db);
+        
+      $db->commit();
       return $result;
+    }catch(Exception $e) {
+      $db->rollback();
+      return false;
     }
-
-    $groupId = $GLOBALS['db']->lastInsertId();
-
-    $assocArray['startTime'] = $arr['date'] . ' ' . $arr['start_time'];
-    $assocArray['longDesc'] = $arr['long_desc'];
-    $assocArray['classId'] = $this->getGroupIdByHash($arr['class_id']);
-    $assocArray['groupId'] = $groupId;
-
-    $sth = $GLOBALS['db']->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time) VALUES (:groupId, :classId, :longDesc, :startTime);');
-    $result = $sth->execute($assocArray);
-
-    if(!$result) {
-      return $result;
-    }
-
-    $groupHash = $this->getGroupHashById($groupId);
-    $result = $this->joinStudyGroup($groupHash);
-      
-    return $result;
   }
 
-  public function getGroupIdByHash($groupHash)
+  public function getGroupIdByHash($groupHash, $db = NULL)
   {
-    $sth = $GLOBALS['db']->prepare('SELECT id FROM groups WHERE hash = :hash;');
+    if(is_null($db)) {
+      $db = $GLOBALS['db'];
+    }
+    $sth = $db->prepare('SELECT id FROM groups WHERE hash = :hash;');
     $sth->bindParam(':hash', $groupHash, PDO::PARAM_STR);
 
     $sth->execute();
     return $sth->fetch(PDO::FETCH_NUM)[0];
   }
 
-  public function getGroupHashById ($groupId)
+  public function getGroupHashById ($groupId, $db = NULL) 
   {
-    return $GLOBALS['db']->query('SELECT hash FROM groups WHERE id = ' . $groupId . ';')->fetch(PDO::FETCH_BOTH)[0];
+    if(is_null($db)) {
+      $db = $GLOBALS['db'];
+    }
+    return $db->query('SELECT hash FROM groups WHERE id = ' . $groupId . ';')->fetch(PDO::FETCH_BOTH)[0];
   }
 
   public function exitStudyGroup($groupHash)
@@ -103,12 +109,15 @@ class Student
     return $sth->execute();
   }
 
-  public function joinStudyGroup($groupHash)
+  public function joinStudyGroup($groupHash, $db = NULL)
   {
+    if(is_null($db)) {
+      $db = $GLOBALS['db'];
+    }
 
-    $groupId = $this->getGroupIdByHash($groupHash);
+    $groupId = $this->getGroupIdByHash($groupHash, $db);
 
-    $sth = $GLOBALS['db']->prepare('INSERT INTO users_to_groups (user_pid, group_id) VALUES (:userPID, :groupId);');
+    $sth = $db->prepare('INSERT INTO users_to_groups (user_pid, group_id) VALUES (:userPID, :groupId);');
     $sth->bindParam(':userPID', $this->pid, PDO::PARAM_STR);
     $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
 
