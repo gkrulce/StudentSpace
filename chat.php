@@ -1,6 +1,5 @@
 <?php
   include('php/session.php');
-  include('php/db.php');
 ?>
 <!DOCTYPE html>
 <html lang="en" class="full-height" ng-app="ChatApp">

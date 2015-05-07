@@ -1,6 +1,5 @@
 <?php
   include('php/session.php');
-  include('php/db.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +69,7 @@
     } else if(!validateDate($_POST['start_time'], 'H:i'))
     {
       echo '<div class="alert alert-danger" role="alert">The time must be given in the format HH:MM (You gave ' . $_POST['start_time'] . ') </div>';
-    }else if($_SESSION['user']->createStudyGroup($db, $_POST))
+    }else if($_SESSION['user']->createStudyGroup($_POST))
     {
       echo '<div class="alert alert-success" role="alert">Study Group successfully created. Go to the chat and introduce yourself!</div>';
       unset($_POST);
@@ -112,7 +111,7 @@
       <select id="classSelectId" name="class_id" class="input-xlarge">
 
         <?php
-        foreach($_SESSION['user']->getClasses($db) as $row)
+        foreach($_SESSION['user']->getClasses() as $row)
         {
           echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
         }
