@@ -116,27 +116,27 @@ class Student
   }
 
   public function updateEmailPreferences($arr) {
-    //TODO TRANSACTION IT
-    // Another funcrtion for getting email preferences
-    $GLOBALS['db']->query('UPDATE users_to_groups ug JOIN class_groups c ON ug.group_id = c.id SET ug.desires_email = 0 WHERE ug.user_pid = "' . $this->pid . '";');
+    $db = new PDO($GLOBALS['dbn'], $GLOBALS['dbusr'], $GLOBALS['dbpass']);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+      $db->beginTransaction();
+      $db->query('UPDATE users_to_groups ug JOIN class_groups c ON ug.group_id = c.id SET ug.desires_email = 0 WHERE ug.user_pid = "' . $this->pid . '";');
 
-    $holders = array();
-    foreach($arr as $row) {
-      $holders[] = "?";
+      $holders = array();
+      foreach($arr as $row) {
+        $holders[] = "?";
+      }
+
+      $sth = $db->prepare('UPDATE users_to_groups ug JOIN groups g ON ug.group_id = g.id SET ug.desires_email = 1  where ug.user_pid = "' . $this->pid . '" AND g.hash IN (' . implode(', ', $holders) . ');');
+
+      $result = $sth->execute($arr);
+
+      $db->commit();
+      return $result;
+    } catch(Exception $e) {
+      $db->rollback();
+      return false;
     }
-
-    $sth = $GLOBALS['db']->prepare('UPDATE users_to_groups ug JOIN groups g ON ug.group_id = g.id SET ug.desires_email = 1  where ug.user_pid = "' . $this->pid . '" AND g.hash IN (' . implode(', ', $holders) . ');');
-
-    return $sth->execute($arr);
-
-    /*var_dump('UPDATE users_to_groups ug JOIN groups g ON ug.group_id = g.id SET ug.desires_email = 1  where ug.user_pid = "' . $this->pid . '" AND g.hash IN ("' . implode('","', $arr) . '");');
-
-    $sth = $GLOBALS['db']->prepare('SELECT * FROM users u where u.id IN (?, ?)');
-    $tmp = array();
-    $tmp[0] = "A11541442";
-    $tmp[1] = "A11111111";
-
-    $sth->bindParam*/
   }
 
 }
