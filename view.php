@@ -59,6 +59,7 @@
       <table class="table table-bordered">
         <tr>
           <th>Class Name</th>
+          <th>Title</th>
           <th>Group Size</th>
           <th>Date</th>
           <th>Time</th>
@@ -68,14 +69,19 @@
           foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
           {
             $date = new DateTime($row['start_date_time']);
-            echo '<tr><td>' . $row['group_name'] . '</td><td>';
+            echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
+            echo '<td>' . $row['group_name'] . '</td>';
 
+            echo '<td>';
             for($i = 0 ; $i < $row['group_size']; $i++)
             {
               echo '<span class="fa fa-user"></span>';
             }
             echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
-            echo '<td><a role="button" class="btn btn-primary" href="#">Join<span class="fa fa-external-link"></span></a></td></tr>';
+            echo '<td><a role="button" class="btn btn-primary" href="#">Join<span class="fa fa-external-link"></span></a></td>';
+            echo '</tr>';
+            echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
+            $row['long_desc'] . '</div></td></tr>';
           }
         ?>
       </table>
