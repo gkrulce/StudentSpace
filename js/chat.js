@@ -1,8 +1,6 @@
 function chatReset() {
   $(".resetOnSubmit").val("");
 }
-
-/* CLIENT SIDE Javascript */
 var socket = io(":3000");
 
 /* ANGULAR JS */
@@ -62,7 +60,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
       $scope.rooms[i]['messages'] = [];
     }
     $scope.$apply();
-    
+
     /* Sets the first pill to active and shows its content if all inactive  */
     if(!$('.gold-pills .active').length) {
       $('.gold-pills li:first').addClass('active');
@@ -95,11 +93,20 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     $scope.rooms = [];
   });
 
+  socket.on('refresh', function() {
+    location.reload();
+  });
+
   $scope.scrollDownChat = function(tab) {
     console.log("scroll down chat...");
     console.log(tab);
     $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
     console.log("scroll down chat DONE");
+  };
+
+  $scope.leaveGroup = function(data) {
+    console.log("Leaving group: " + data);
+    socket.emit('leave group', {"user_id": $scope.id, "group_id": $scope.rooms[data]['group_id']});
   };
 
   /* Grabs the GET parameters */

@@ -68,6 +68,13 @@ io.on('connection', function(socket){
     io.to(group_id).emit('new messages', msg);
 });
 
+  socket.on('leave group', function(msg) {
+    if(("group_id" in msg) && ("user_id" in msg)) {
+      console.log("Leaving group: " + msg['group_id']);
+      leaveGroup(msg, socket);
+    }
+  });
+
 });
 
 function getUserInformation(uid, socket) {
@@ -136,5 +143,14 @@ function storeMessage(msg) {
         }
       });
     }
+  });
+};
+
+function leaveGroup(msg, socket) {
+  var sql = 'DELETE ug FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id WHERE u.hash = ? AND g.hash = ?;';
+  sql = mysql.format(sql, [msg['user_id'], msg['group_id']]);
+  console.log(sql);
+  db.query(sql, function(err, rows, fields) {
+    socket.emit('refresh');
   });
 };

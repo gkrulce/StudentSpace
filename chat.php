@@ -76,7 +76,7 @@
           <li ng-repeat="r in rooms" role="presentation">
             <a href="#tab{{$index}}" data-toggle="tab" ng-click="scrollDownChat()">
               {{r.group_name}}
-              <div class="btn btn-danger x-out circle">
+              <div class="btn btn-danger x-out circle" ng-click="leaveGroup($index)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
               </div>
             </a>
