@@ -3,7 +3,7 @@ body {
 }
 
 ::selection {
-  background: rgb(255, 235, 199);
+  background: rgb(155, 199, 255);
 }
 
 .fa-user {

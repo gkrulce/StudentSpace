@@ -1,69 +1,142 @@
+body {
+  overflow: hidden;
+}
+
 .circle {
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background: Green;
-  font-size: 20pt;
-  text-align: center;
-  vertical-align: middle; 
-  padding: 2px;
-  display: inline-block;
-  color: #FFF;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }
 
 .arrive {
-  margin: 10px 100px 10px 50px;
-  /*background: #EBEBEB;*/
-  background: Gray;
+  background: #e8e8e8;
 }
 
 .sent {
-  margin: 10px 10px 10px 100px;
   background: #0084FF; 
   color: #FFF;
-  float:right;
+  margin-left: auto !important; /* These margins make it R justified */
+  margin-right: 0 !important;
 }
 
 .chat-bubble {
-  padding: 10px;
   border-radius: 20px;
-  font-size: 12pt;
-  width: 50%;
+  display: inline-block;
+  font-size: 11pt;
+  max-width: 60%;
+  padding: 5px 10px 5px 10px;
+  word-wrap: break-word;
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 
 .chat-block {
-  display: block;
+  display: flex;
+  margin: 3px;
   position: relative;
+  width: 100%;
+}
+
+.nav-stacked>li+li {
+  margin: 0;
+}
+
+.nav-pills>li>a {
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
 }
 
 .gold-pills > li.active > a,
 .gold-pills > li.active > a:focus {
-    background-color: rgba(255, 201, 31, 1);
+  background-color: rgba(255, 201, 31, 1);
+  font-weight: bold;
 }
 
 .gold-pills > li.active > a:hover {
-    background-color: rgba(255, 219, 80, 1);
+  background-color: rgba(255, 219, 80, 1);
+}
+
+.gold-pills > li > a:hover div.x-out {
+  opacity: 1;
+}
+
+.x-out {
+  float: right;
+  height: 20px;
+  opacity: 0.5;
+  padding: 0;
+  transition: all 0.35s cubic-bezier(0,0.5,0,1);
+  width: 20px;
+}
+
+form {
+  background-color: #fff;
+  border-top: 1px solid #aaa;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
 }
 
 .input-box {
-  position: fixed;
-  bottom:0;
-  right: 0;
-  width: 100%;
   box-sizing: border-box;
 }
 
+input[type=text] {
+  border: none;
+  border-right: 1px solid #aaa;
+  box-sizing: border-box;
+  height: 45px;
+  padding: 10px;
+  width: 50%;
+}
+
+.col-xs-2.sidebar {
+  border-right: 1px solid #aaa;
+  height: calc(100vh - 50px);
+  margin-top: 50px;
+  overflow-y: scroll;
+  padding: 0;
+  position: fixed;
+  top: 0;
+}
+
 .chat-area {
+  height: calc(100vh - 100px);
+  padding: 0;
   position: relative;
 }
 
+#message-pane {
+  height: 95%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 10px 0 10px;
+}
+
 .full-height {
-  height: 100%;
+  height: 90vh;
 }
 
 .full-width {
   width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+  background-color: none;
+  border-radius: 10px;
+  transition: all 0.25s cubic-bezier(0,0.5,0,1);
+}
+
+::-webkit-scrollbar-track:hover {
+  border: 1px solid #ccc;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
 }

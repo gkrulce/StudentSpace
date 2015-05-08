@@ -42,12 +42,14 @@
 
   </head>
 
-  <body class="full-height">
+  <body ng-controller="ChatCtrl">
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+              aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -68,39 +70,55 @@
       </div>
     </nav>
 
-  <body ng-controller="ChatCtrl" class="full-height">
-
-    <div class="row full-height">
-      <div class="col-xs-2">
+      <!-- Sidebar -->
+      <div class="col-xs-2 sidebar">
         <ul class="nav nav-pills nav-stacked gold-pills">
-            <li ng-repeat="r in rooms" role="presentation"><a href="#tab{{$index}}" data-toggle="tab">{{r.group_name}}</a></li>
+          <li ng-repeat="r in rooms" role="presentation">
+            <a href="#tab{{$index}}" data-toggle="tab" ng-click="scrollDownChat()">
+              {{r.group_name}}
+              <div class="btn btn-danger x-out circle">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
-      <div class="col-xs-10 chat-area full-height">
-        <div class="tab-content">
-          <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
+      <div class="col-xs-2"> 
+        <!--dummy filler column-->
+      </div>
 
-            <div class="chat-block" ng-repeat="m in r.messages">
-              <div class="chat-bubble sent" ng-if="m.username == username">
-                <p>{{m.message}}</p>
-              </div>
-
-              <div class="chat-bubble arrive" ng-if="m.username !== username">
-                <p>{{m.message}}</p>
+      <!-- Main pane -->
+      <div class="col-xs-10 chat-area">
+        <!-- Holds the messages-->
+        <div id="message-pane">
+          <div class="tab-content">
+            <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
+              <div class="chat-block" ng-repeat="m in r.messages">
+                <div ng-if="m.username != username">
+                  **{{m.username}}**
+                </div>
+                <div ng-class="{'sent': m.username == username,
+                    'arrive': m.username != username}" class="chat-bubble">
+                  {{m.message}}
+                </div>
+                <div ng-if="m.username == username">
+                  **{{m.username}}**
+                </div>
               </div>
             </div>
-
           </div>
         </div>
+
+        <!-- Chat input box -->
         <form onsubmit="chatReset(); return false;" ng-submit="sendMessage()" >
           <div class="input-box">
-            <input class="resetOnSubmit" type="text" ng-model="inputText" placeholder="Enter message here..."/>
+            <input class="resetOnSubmit" type="text" ng-model="inputText"
+                placeholder="Enter message here..."/>
             <input class="btn btn-primary" type="submit" value="Send">
             <input type="checkbox" ng-model="isAnonymous"> Send Anonymously
           </div>
         </form>
       </div>
-    </div>
     
 
     <!-- Bootstrap core JavaScript -->

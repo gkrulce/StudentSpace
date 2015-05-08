@@ -18,6 +18,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
   $scope.username = "";
   $scope.isAnonymous = false;
 
+
   socket.on('connect', function() {
     console.log("Logging in with id: " + $scope.id);
     socket.emit('login', $scope.id);
@@ -81,12 +82,21 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
       //$scope.rooms[$scope.roomDict[msg[i]['uuid']]]['messages'].concat(msg);
     }
     $scope.$apply();
+    $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
+    console.log("should have scrolled noob");
   });
 
   socket.on('disconnect', function() {
     $scope.rooms = [];
     $scope.roomDict = [];
   });
+
+  $scope.scrollDownChat = function(tab) {
+    console.log("scroll down chat...");
+    console.log(tab);
+    $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
+    console.log("scroll down chat DONE");
+  }
 
   /* Grabs the GET parameters */
   function getParameterByName(name) {

@@ -54,39 +54,6 @@
     </nav>
 
     <div class="container">
-      <h2 class="text-center"> Current Study Groups! </h2>
-      <h3><i>note: we definitely want to move the join and current off one page.
-      Thinkin of making "dashboard" with reminders, etc. -rnlee</i></h3>
-      <table class="table table-bordered">
-        <tr>
-          <th>Class Name</th>
-          <th>Title</th>
-          <th>Group Size</th>
-          <th>Date</th>
-          <th>Time</th>
-        </tr>
-        <?php
-          foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
-          {
-            $date = new DateTime($row['start_date_time']);
-            echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
-            echo '<td>' . $row['group_name'] . '</td>';
-
-            echo '<td>';
-            for($i = 0 ; $i < $row['group_size']; $i++)
-            {
-              echo '<span class="fa fa-user"></span>';
-            }
-            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
-            echo '</tr>';
-            echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
-            $row['long_desc'] . '</div></td></tr>';
-          }
-        ?>
-      </table>
-    </div>
-
-    <div class="container">
       <h2 class="text-center"> Need a study group? </h2>
       <h3 class="text-center"> Join one! </h3>
       <table class="table table-bordered">
