@@ -28,3 +28,15 @@ $(document).ready(function() {
     }
   });
 });
+$(document).ready(function() {
+  $('.joinStudyGroupBtn').click(function() {
+    var groupId = $(this).attr('id');
+    $.post('php/joinStudyGroup.php', {id: groupId}, function(data) {
+      $('#' + groupId).closest('tr').hide();
+      $('#' + groupId).closest('tr').next('tr').hide();
+      $('.alert.hide.alert-success').removeClass('hide');
+    }).fail(function() {
+      $('.alert.hide.alert-danger').removeClass('hide');
+    });
+  });
+});

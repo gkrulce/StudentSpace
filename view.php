@@ -54,6 +54,8 @@
     </nav>
 
     <div class="container">
+      <div class="alert alert-success hide" role="alert"> Study group successfully joined. </div>
+      <div class="alert alert-danger hide" role="alert"> Study group not joined. </div>
       <h2 class="text-center"> Need a study group? </h2>
       <h3 class="text-center"> Join one! </h3>
       <table class="table table-bordered">
@@ -78,7 +80,7 @@
               echo '<span class="fa fa-user"></span>';
             }
             echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
-            echo '<td><a role="button" class="btn btn-primary" href="#">Join<span class="fa fa-external-link"></span></a></td>';
+            echo '<td><a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-external-link"></span></a></td>';
             echo '</tr>';
             echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
             $row['long_desc'] . '</div></td></tr>';
