@@ -2,7 +2,6 @@ function chatReset() {
   $(".resetOnSubmit").val("");
 }
 
-
 /* CLIENT SIDE Javascript */
 var socket = io(":3000");
 
@@ -13,7 +12,6 @@ var app = angular.module('ChatApp', []);
 app.controller('ChatCtrl', ['$scope', function($scope) {
 
   $scope.rooms = [];
-  $scope.roomDict = [];
   $scope.id = userId;
   $scope.username = "";
   $scope.isAnonymous = false;
@@ -62,7 +60,6 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     $scope.rooms = msg;
     for(var i = 0 ; i < $scope.rooms.length ; i++) {
       $scope.rooms[i]['messages'] = [];
-      $scope.roomDict[$scope.rooms[i]['group_id']] = i;
     }
     $scope.$apply();
     
@@ -77,9 +74,17 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     console.log("New messages!!");
     console.log(msg);
     for(var i = 0 ; i < msg.length ; i++) {
-      var pos = $scope.roomDict[msg[i]['group_id']];
-      $scope.rooms[pos]['messages'] = $scope.rooms[pos]['messages'].concat(msg[i]);
-      //$scope.rooms[$scope.roomDict[msg[i]['uuid']]]['messages'].concat(msg);
+      var pos = -1;
+      for(var j = 0 ; j < $scope.rooms.length ; j++) {
+        if($scope.rooms[j]['group_id'] == msg[i]['group_id']) {
+          pos = j;
+          break;
+        }
+      }
+      console.log("Message sent to room: " + pos);
+      if(pos != -1) {
+        $scope.rooms[pos]['messages'] = $scope.rooms[pos]['messages'].concat(msg[i]);
+      }
     }
     $scope.$apply();
     $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
@@ -88,7 +93,6 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
 
   socket.on('disconnect', function() {
     $scope.rooms = [];
-    $scope.roomDict = [];
   });
 
   $scope.scrollDownChat = function(tab) {
@@ -96,7 +100,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     console.log(tab);
     $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
     console.log("scroll down chat DONE");
-  }
+  };
 
   /* Grabs the GET parameters */
   function getParameterByName(name) {
