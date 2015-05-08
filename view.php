@@ -65,7 +65,7 @@
           <th>Time</th>
         </tr>
         <?php
-          foreach($_SESSION['user']->getCurrentStudyGroups() as $row)
+          foreach($_SESSION['user']->getCurrentStudyGroups($db) as $row)
           {
             $date = new DateTime($row['start_date_time']);
             echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
@@ -97,7 +97,7 @@
           <th>More Information</th>
         </tr>
         <?php
-          foreach($_SESSION['user']->getAllStudyGroups() as $row)
+          foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
           {
             $date = new DateTime($row['start_date_time']);
             echo '<tr><td>' . $row['group_name'] . '</td><td>';

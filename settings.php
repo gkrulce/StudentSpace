@@ -55,7 +55,7 @@
     <div class="container">
 <?php 
 if(isset($_POST['singlebutton'])) {
-  if($_SESSION['user']->updateEmailPreferences($_POST['emailPref']))
+  if($_SESSION['user']->updateEmailPreferences($db, $_POST['emailPref']))
   {
     echo '<div class="alert alert-success" role="alert">Email preferences successfully updated!</div>';
   }else
@@ -78,7 +78,7 @@ if(isset($_POST['singlebutton'])) {
 
           <?php
             $i = 0;
-            foreach($_SESSION['user']->getClasses() as $row) {
+            foreach($_SESSION['user']->getClasses($db) as $row) {
               echo '<div class="checkbox"><label for="emailPref-' . $i . '"><input type="checkbox" name="emailPref[]" id="emailPref-' . $i . '" value="' . $row['class_id'] . '"';
               if($row["desires_email"] == "1") {
                 echo ' checked';

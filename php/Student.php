@@ -1,5 +1,4 @@
 <?php
-//NEED TO DECOUPLE DB FROM THIS CLASS
 include('db.php');
 class Student
 { 
@@ -20,26 +19,26 @@ class Student
   {
     return $this->hash;
   }
-  public function getAllStudyGroups()
+  public function getAllStudyGroups($db)
   {
-    return $GLOBALS['db']->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
   }
 
-  public function getClasses()
+  public function getClasses($db)
   {
-    return $GLOBALS['db']->query('SELECT g.name class_name, g.hash AS class_id, ug.desires_email FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN class_groups cg ON g.id = cg.id WHERE u.pid = \'' . $this->pid .'\';');
+    return $db->query('SELECT g.name class_name, g.hash AS class_id, ug.desires_email FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN class_groups cg ON g.id = cg.id WHERE u.pid = \'' . $this->pid .'\';');
   }
 
-  public function getCurrentStudyGroups()
+  public function getCurrentStudyGroups($db)
   {
-    return $GLOBALS['db']->query('SELECT (SELECT COUNT(*) FROM users_to_groups ug WHERE ug.group_id = g.id) AS group_size, g.hash group_id, c.name class_name, sg.start_time start_date_time, g.name group_name, sg.long_desc FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN study_groups sg ON g.id = sg.id JOIN groups c ON c.id = sg.class_id WHERE u.pid = \'' . $this->pid . '\';');
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups ug WHERE ug.group_id = g.id) AS group_size, g.hash group_id, c.name class_name, sg.start_time start_date_time, g.name group_name, sg.long_desc FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id JOIN study_groups sg ON g.id = sg.id JOIN groups c ON c.id = sg.class_id WHERE u.pid = \'' . $this->pid . '\';');
   }
 
   /* Setter methods */
 
   /* $assocArray must have certain key-value pairs or database query will fail.
    */
-  public function createStudyGroup($arr)
+  public function createStudyGroup($db, $arr)
   {
     /* An example of how to set up an associate array for this function 
     $assocArray = array();
@@ -48,7 +47,6 @@ class Student
     $assocArray["long_desc"] = "TESTEST2";
     $assocArray["class_id"] = 8; */
 
-    $db = new PDO($GLOBALS['dbn'], $GLOBALS['dbusr'], $GLOBALS['dbpass']);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     try {
       $db->beginTransaction();
@@ -61,27 +59,26 @@ class Student
 
       $assocArray['startTime'] = $arr['date'] . ' ' . $arr['start_time'];
       $assocArray['longDesc'] = $arr['long_desc'];
-      $assocArray['classId'] = $this->getGroupIdByHash($arr['class_id']);
+      $assocArray['classId'] = $this->getGroupIdByHash($db, $arr['class_id']);
       $assocArray['groupId'] = $groupId;
 
       $sth = $db->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time) VALUES (:groupId, :classId, :longDesc, :startTime);');
       $sth->execute($assocArray);
-      $groupHash = $this->getGroupHashById($groupId, $db);
-      $result = $this->joinStudyGroup($groupHash, $db);
+      $groupHash = $this->getGroupHashById($db, $groupId);
+      $result = $this->joinStudyGroup($db, $groupHash);
         
       $db->commit();
+      $db->setAttribute(PDO::ATTR_ERRMODE, $GLOBALS['db_errmode']);
       return $result;
     }catch(Exception $e) {
       $db->rollback();
+      $db->setAttribute(PDO::ATTR_ERRMODE, $GLOBALS['db_errmode']);
       return false;
     }
   }
 
-  public function getGroupIdByHash($groupHash, $db = NULL)
+  public function getGroupIdByHash($db, $groupHash)
   {
-    if(is_null($db)) {
-      $db = $GLOBALS['db'];
-    }
     $sth = $db->prepare('SELECT id FROM groups WHERE hash = :hash;');
     $sth->bindParam(':hash', $groupHash, PDO::PARAM_STR);
 
@@ -89,33 +86,25 @@ class Student
     return $sth->fetch(PDO::FETCH_NUM)[0];
   }
 
-  public function getGroupHashById ($groupId, $db = NULL) 
+  public function getGroupHashById ($db, $groupId) 
   {
-    if(is_null($db)) {
-      $db = $GLOBALS['db'];
-    }
     return $db->query('SELECT hash FROM groups WHERE id = ' . $groupId . ';')->fetch(PDO::FETCH_BOTH)[0];
   }
 
-  public function exitStudyGroup($groupHash)
+  public function exitStudyGroup($db, $groupHash)
   {
+    $groupId = $this->getGroupIdByHash($db, $groupHash);
 
-    $groupId = $this->getGroupIdByHash($groupHash);
-
-    $sth = $GLOBALS['db']->prepare('DELETE FROM users_to_groups WHERE group_id = :groupId AND user_pid = :userPID;');
+    $sth = $db->prepare('DELETE FROM users_to_groups WHERE group_id = :groupId AND user_pid = :userPID;');
     $sth->bindParam(':groupId', $groupId, PDO::PARAM_INT);
     $sth->bindParam(':userPID', $this->pid, PDO::PARAM_STR);
 
     return $sth->execute();
   }
 
-  public function joinStudyGroup($groupHash, $db = NULL)
+  public function joinStudyGroup($db, $groupHash)
   {
-    if(is_null($db)) {
-      $db = $GLOBALS['db'];
-    }
-
-    $groupId = $this->getGroupIdByHash($groupHash, $db);
+    $groupId = $this->getGroupIdByHash($db, $groupHash);
 
     $sth = $db->prepare('INSERT INTO users_to_groups (user_pid, group_id) VALUES (:userPID, :groupId);');
     $sth->bindParam(':userPID', $this->pid, PDO::PARAM_STR);
@@ -124,8 +113,7 @@ class Student
     return $sth->execute();
   }
 
-  public function updateEmailPreferences($arr) {
-    $db = new PDO($GLOBALS['dbn'], $GLOBALS['dbusr'], $GLOBALS['dbpass']);
+  public function updateEmailPreferences($db, $arr) {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     try {
       $db->beginTransaction();
@@ -141,9 +129,11 @@ class Student
       $result = $sth->execute($arr);
 
       $db->commit();
+      $db->setAttribute(PDO::ATTR_ERRMODE, $GLOBALS['db_errmode']);
       return $result;
     } catch(Exception $e) {
       $db->rollback();
+      $db->setAttribute(PDO::ATTR_ERRMODE, $GLOBALS['db_errmode']);
       return false;
     }
   }
