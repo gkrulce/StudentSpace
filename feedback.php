@@ -57,7 +57,7 @@
   <?php
     if(isset($_POST['singlebutton'])) {
       //TODO SEND EMAIL
-      echo '<div class="alert alert-success" role="alert">Feedback successfull submitted!</div>';
+      echo '<div class="alert alert-success" role="alert">Feedback successfully submitted!</div>';
       unset($_POST);
     }
   ?>
