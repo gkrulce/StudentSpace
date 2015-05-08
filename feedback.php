@@ -2,7 +2,7 @@
   include('php/session.php');
 ?>
 <!DOCTYPE html>
-<html lang="en" class="full-height" ng-app="ChatApp">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,25 +24,10 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/chat.css">
-
-
-    <!-- Angular JS -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-
-    <!-- Socket IO JavaScript -->
-    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
-
-    <script>
-      var userId = "<?php echo $_SESSION['user']->getHash() ?>";
-    </script>
-
-    <!-- Chat Javascript -->
-    <script src="js/chat.js"></script>
 
   </head>
 
-  <body class="full-height">
+  <body>
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -59,48 +44,48 @@
           <ul class="nav navbar-nav">
             <li role="presentation"><a href="view.php">View</a></li>
             <li role="presentation"><a href="create.php">Create</a></li>
-            <li role="presentation" class="active"><a href="chat.php">Chat</a></li>
+            <li role="presentation"><a href="chat.php">Chat</a></li>
             <li role="presentation"><a href="settings.php">Settings</a></li>
-            <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
+            <li role="presentation" class="active" id="nav-accent"><a href="feedback.php">Feedback</a></li>
             <li role="presentation"><a href="logout.php">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-  <body ng-controller="ChatCtrl" class="full-height">
+<div class="container">
+  <?php
+    if(isset($_POST['singlebutton'])) {
+      //TODO SEND EMAIL
+      echo '<div class="alert alert-success" role="alert">Feedback successfull submitted!</div>';
+      unset($_POST);
+    }
+  ?>
+  <form class="form-horizontal" action="feedback.php" method="post">
+  <fieldset>
 
-    <div class="row full-height">
-      <div class="col-xs-2">
-        <ul class="nav nav-pills nav-stacked gold-pills">
-            <li ng-repeat="r in rooms" role="presentation"><a href="#tab{{$index}}" data-toggle="tab">{{r.group_name}}</a></li>
-        </ul>
-      </div>
-      <div class="col-xs-10 chat-area full-height">
-        <div class="tab-content">
-          <div ng-repeat="r in rooms" class="tab-pane" id="tab{{$index}}">
+  <!-- Form Name -->
+  <legend>Feedback</legend>
 
-            <div class="chat-block" ng-repeat="m in r.messages">
-              <div class="chat-bubble sent" ng-if="m.username == username">
-                <p>{{m.message}}</p>
-              </div>
-
-              <div class="chat-bubble arrive" ng-if="m.username !== username">
-                <p>{{m.message}}</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <form onsubmit="chatReset(); return false;" ng-submit="sendMessage()" >
-          <div class="input-box">
-            <input class="resetOnSubmit" type="text" ng-model="inputText" placeholder="Enter message here..."/>
-            <input class="btn btn-primary" type="submit" value="Send">
-            <input type="checkbox" ng-model="isAnonymous"> Send Anonymously
-          </div>
-        </form>
-      </div>
+  <!-- Textarea -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="feedback">This form directly contacts our development team.</label>
+    <div class="col-md-4">                     
+      <textarea class="form-control" id="feedback" name="feedback"></textarea>
     </div>
+  </div>
+
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton"></label>
+    <div class="col-md-4">
+      <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit!</button>
+    </div>
+  </div>
+
+  </fieldset>
+  </form>
+</div>
     
 
     <!-- Bootstrap core JavaScript -->

@@ -74,3 +74,7 @@ table>tbody>tr>td.expandable {
 .create-form{
   margin: 0 auto 0 auto;
 }
+
+#nav-accent > a{
+  color: #0088EA;
+}
