@@ -25,6 +25,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
 
+    <script src="//cdn.ckeditor.com/4.4.7/basic/ckeditor.js"></script>
   </head>
 
   <body>
@@ -135,6 +136,9 @@
     <label class="col-md-4 control-label" for="textarea">Agenda</label>
     <div class="col-md-4">                     
       <textarea class="form-control" id="agenda" name="long_desc" placeholder="eg. Solve homework problems or quiz each other on vocabulary terms."><?php if(isset($_POST['long_desc'])) {echo $_POST['long_desc'];} ?></textarea>
+      <script>
+        CKEDITOR.replace('long_desc');
+      </script>
       <span class="help-block">How are you studying? List a few specific actions you want to accomplish during this study group.</span>  
     </div>
   </div>

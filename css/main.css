@@ -62,17 +62,8 @@ table>tbody>tr>td.expandable {
 }
 }
 
-.agenda-text {
-  width:300px;
-  height:100px;
-}
-
 .full-height {
   height: 100%;
-}
-
-.create-form{
-  margin: 0 auto 0 auto;
 }
 
 #nav-accent > a{
