@@ -65,7 +65,6 @@
           <th>Group Size</th>
           <th>Date</th>
           <th>Time</th>
-          <th>More Information</th>
         </tr>
         <?php
           foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
@@ -80,10 +79,9 @@
               echo '<span class="fa fa-user"></span>';
             }
             echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
-            echo '<td><a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-external-link"></span></a></td>';
             echo '</tr>';
-            echo '<tr><td colspan="10" class="expandable"><div class="secret">' .
-            $row['long_desc'] . '</div></td></tr>';
+            echo '<tr><td colspan="10" class="expandable"><div class="container"><div class="secret">' .
+            $row['long_desc'] . '<a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-check"></span></a></div></td></tr>';
           }
         ?>
       </table>

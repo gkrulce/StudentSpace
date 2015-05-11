@@ -33,7 +33,7 @@ $(document).ready(function() {
     var groupId = $(this).attr('id');
     $.post('php/joinStudyGroup.php', {id: groupId}, function(data) {
       $('#' + groupId).closest('tr').hide();
-      $('#' + groupId).closest('tr').next('tr').hide();
+      $('#' + groupId).closest('tr').prev('tr').hide();
       $('.alert.hide.alert-success').removeClass('hide');
     }).fail(function() {
       $('.alert.hide.alert-danger').removeClass('hide');

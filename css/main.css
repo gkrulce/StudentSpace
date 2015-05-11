@@ -10,7 +10,7 @@ body {
 	padding-left: .2em;
 }
 
-.fa-external-link {
+.fa-check {
 	padding-left: 1em;
 }
 
@@ -45,6 +45,7 @@ table>tbody>tr>td.expandable {
   overflow: hidden;
   padding: 0 8px 0 8px;
   transition: all 0.255s cubic-bezier(0,0,0.3,0.9);
+  overflow-y: scroll;
 }
 
 .secret.reveal {
