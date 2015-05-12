@@ -147,10 +147,42 @@ function storeMessage(msg) {
 };
 
 function leaveGroup(msg, socket) {
-  var sql = 'DELETE ug FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id WHERE u.hash = ? AND g.hash = ?;';
-  sql = mysql.format(sql, [msg['user_id'], msg['group_id']]);
-  console.log(sql);
-  db.query(sql, function(err, rows, fields) {
-    socket.emit('refresh');
+  db.beginTransaction(function(err) {
+    if(err) {throw err;}
+    var sql = 'DELETE ug FROM users u JOIN users_to_groups ug ON u.pid = ug.user_pid JOIN groups g ON ug.group_id = g.id WHERE u.hash = ? AND g.hash = ?;';
+    sql = mysql.format(sql, [msg['user_id'], msg['group_id']]);
+    console.log(sql);
+    db.query(sql, function(err, rows, fields) {
+      if(err) {
+        db.rollback(function() {
+          socket.emit('generic error');
+          throw err;
+        });
+      }
+
+      /* SQL to delete an empty study group. FK relationship will delete the group */
+//TODO BROKEN
+      var sql = 'DELETE g FROM groups g JOIN study_groups sg ON g.id = sg.id WHERE g.hash = ? AND NOT EXISTS (SELECT * FROM users_to_groups ug where ug.group_id = g.id);';
+      sql = mysql.format(sql, [msg['group_id'], msg['group_id']]);
+      console.log(sql);
+      db.query(sql, function(err, rows, fields) {
+        if(err) {
+          db.rollback(function() {
+            socket.emit('generic error');
+            throw err;
+          });
+        }
+        
+        db.commit(function(err) {
+          if(err) {
+            db.rollback(function() {
+              socket.emit('generic error');
+              throw err;
+            });
+          }
+          socket.emit('refresh');
+        });
+      });
+    });
   });
 };

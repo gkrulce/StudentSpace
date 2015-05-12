@@ -42,7 +42,7 @@ CREATE TABLE `groups` (
   `name` varchar(255) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `messages`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
+  `group_id` int(11) DEFAULT NULL,
   `user_pid` char(9) NOT NULL,
   `message` text,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -62,9 +62,9 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`),
   KEY `user_pid` (`user_pid`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL,
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_pid`) REFERENCES `users` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27282 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27434 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +81,7 @@ CREATE TABLE `study_groups` (
   `start_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `class_id` (`class_id`),
-  CONSTRAINT `study_groups_ibfk_1` FOREIGN KEY (`id`) REFERENCES `groups` (`id`),
+  CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE,
   CONSTRAINT `study_groups_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class_groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -113,6 +113,7 @@ DROP TABLE IF EXISTS `users_to_groups`;
 CREATE TABLE `users_to_groups` (
   `user_pid` char(9) NOT NULL,
   `group_id` int(11) NOT NULL,
+  `desires_email` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`user_pid`,`group_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `users_to_groups_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
@@ -129,4 +130,4 @@ CREATE TABLE `users_to_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-26  3:55:23
+-- Dump completed on 2015-05-12  0:12:52

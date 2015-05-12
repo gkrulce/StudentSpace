@@ -20,6 +20,9 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     socket.emit('login', $scope.id);
   });
 
+  socket.on('generic error', function() {
+    console.log("There was an internal server error (500).");
+  });
 
   socket.on('user information', function(msg) {
     $scope.username = msg;
