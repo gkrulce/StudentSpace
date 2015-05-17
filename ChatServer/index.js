@@ -75,6 +75,13 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('edit group', function(msg) {
+    if(("group_id" in msg) && ("long_desc" in msg) && ("group_name" in msg)) {
+      console.log("Editing group: " + msg['group_id']);
+      editGroup(msg, socket); 
+    }
+  });
+
 });
 
 function getUserInformation(uid, socket) {
@@ -183,5 +190,15 @@ function leaveGroup(msg, socket) {
         });
       });
     });
+  });
+};
+
+//Give: long_desc, group_name, group_id
+function editGroup(msg, socket) {
+  var sql = 'UPDATE groups g, study_groups sg SET g.name = ?, sg.long_desc = ? WHERE g.id = sg.id AND g.hash = ?;';
+  sql = mysql.format(sql, [msg['group_name'], msg['long_desc'], msg['group_id']]);  
+  db.query(sql, function(err, rows, fields) {
+    console.log("Edited group description!");
+    socket.emit('refresh');
   });
 };
