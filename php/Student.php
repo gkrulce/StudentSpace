@@ -40,6 +40,9 @@ class Student
    */
   public function createStudyGroup($db, $arr)
   {
+    include('purify.php');
+    $arr['short_desc'] = $purifier->purify($arr['short_desc']);
+    $arr['long_desc'] = $purifier->purify($arr['long_desc']);
     /* An example of how to set up an associate array for this function 
     $assocArray = array();
     $assocArray["start_time"] = "2015-01-01 12:00:00";

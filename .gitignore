@@ -1,3 +1,4 @@
 ChatServer/node_modules
 ChatServer/nohup.out
 MySQL/Backup.sql
+lib/htmlpurifier
