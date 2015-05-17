@@ -21,7 +21,7 @@ class Student
   }
   public function getAllStudyGroups($db)
   {
-    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.start_time > DATE_ADD(NOW(), INTERVAL 2 HOUR) AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
+    return $db->query('SELECT (SELECT COUNT(*) FROM users_to_groups WHERE group_id = sg.id) group_size, g2.name AS group_name, g.name class_name, g2.hash group_id, sg.start_time start_date_time, sg.long_desc FROM study_groups sg JOIN groups g ON sg.class_id = g.id JOIN users_to_groups usg ON usg.group_id = g.id JOIN groups g2 ON g2.id = sg.id WHERE usg.user_pid = \'' . $this->pid . '\' AND sg.end_time > NOW() AND sg.id NOT IN (SELECT group_id FROM users_to_groups WHERE user_pid = \'' . $this->pid . '\');');
   }
 
   public function getClasses($db)
@@ -43,6 +43,9 @@ class Student
     include('purify.php');
     $arr['short_desc'] = $purifier->purify($arr['short_desc']);
     $arr['long_desc'] = $purifier->purify($arr['long_desc']);
+    if(!is_numeric($arr['length'])) {
+      return false;
+    }
     /* An example of how to set up an associate array for this function 
     $assocArray = array();
     $assocArray["start_time"] = "2015-01-01 12:00:00";
@@ -60,12 +63,16 @@ class Student
 
       $groupId = $db->lastInsertId();
 
-      $assocArray['startTime'] = $arr['date'] . ' ' . $arr['start_time'];
+      $dateObj = new DateTime($arr['date'] . ' ' . $arr['start_time']);
+      $assocArray['startTime'] = $dateObj->format('Y-m-d H:i:s');
+      $dateObj->add(new DateInterval('PT' . $arr['length'] . 'H'));
+      $assocArray['endTime'] = $dateObj->format('Y-m-d H:i:s');
+
       $assocArray['longDesc'] = $arr['long_desc'];
       $assocArray['classId'] = $this->getGroupIdByHash($db, $arr['class_id']);
       $assocArray['groupId'] = $groupId;
 
-      $sth = $db->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time) VALUES (:groupId, :classId, :longDesc, :startTime);');
+      $sth = $db->prepare('INSERT INTO study_groups (id, class_id, long_desc, start_time, end_time) VALUES (:groupId, :classId, :longDesc, :startTime, :endTime);');
       $sth->execute($assocArray);
       $groupHash = $this->getGroupHashById($db, $groupId);
       $result = $this->joinStudyGroup($db, $groupHash);

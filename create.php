@@ -108,6 +108,21 @@
 
   <!-- Select Basic -->
   <div class="form-group">
+    <label class="col-md-4 control-label" for="length">Length (Hours)</label>
+    <div class="col-md-4">
+      <select id="length" name="length" class="form-control">
+        <option value="1">1 Hour</option>
+        <option value="2">2 Hours</option>
+        <option value="3">3 Hours</option>
+        <option value="4">4 Hours</option>
+        <option value="6">6 Hours</option>
+        <option value="8">8 Hours</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Select Basic -->
+  <div class="form-group">
     <label class="col-md-4 control-label" for="class_id">Class</label>
     <div class="col-md-4">
       <select id="classSelectId" name="class_id" class="input-xlarge">

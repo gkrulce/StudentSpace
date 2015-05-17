@@ -42,7 +42,7 @@ CREATE TABLE `groups` (
   `name` varchar(255) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `messages` (
   KEY `user_pid` (`user_pid`),
   CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL,
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_pid`) REFERENCES `users` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27434 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27492 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,10 +79,11 @@ CREATE TABLE `study_groups` (
   `class_id` int(11) NOT NULL,
   `long_desc` text,
   `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `class_id` (`class_id`),
-  CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `study_groups_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class_groups` (`id`)
+  CONSTRAINT `study_groups_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class_groups` (`id`),
+  CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -130,4 +131,4 @@ CREATE TABLE `users_to_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-12  0:12:52
+-- Dump completed on 2015-05-17  1:00:17
