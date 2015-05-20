@@ -1,0 +1,6 @@
+Required user accounts:
+  root
+  webapp
+    GRANT SELECT, INSERT, UPDATE, DELETE ON *.* TO 'webapp'@'localhost';
+  mysqlbackup
+    GRANT SELECT, LOCK TABLES ON *.* TO 'backup'@'localhost';
