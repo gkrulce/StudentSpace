@@ -12,7 +12,7 @@ var db_config = {
   host: 'localhost',
     user: 'webapp',
     password: '',
-    database: 'StudyTree'
+    database: 'ucsdspace'
 };
 
 function handleDisconnect() {
