@@ -68,8 +68,8 @@ header {
 
 #logo {
   color: #fff;
-  font-family: 'Indie Flower', cursive;
-  font-size: 135px;
+  font-family: Roboto, sans-serif;
+  font-size: 125px;
   font-weight: normal;
   line-height: 110px;
   text-shadow: 0 0 10px rgba(0,0,0,0.3);

@@ -1,5 +1,10 @@
-body {
-	margin-top: 65px;
+@font-face {
+  font-family: Obitron
+  src: url(fonts/Obitron);
+}
+
+html {
+  font-family: Roboto, sans-serif;
 }
 
 ::selection {
@@ -15,7 +20,7 @@ body {
 }
 
 .navbar-brand {
-  font: bold 18pt/18pt 'Indie Flower';
+  font: bold 18pt/18pt 'Roboto';
   text-transform: uppercase;
 }
 

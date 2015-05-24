@@ -4,10 +4,18 @@ function chatReset() {
 var socket = io(":3000");
 
 /* ANGULAR JS */
+angular.module('ChatApp', ['spaceFilters']).
 
-var app = angular.module('ChatApp', []);
+controller('ChatCtrl', ['$scope', function($scope) {
+  $(document).ready(function() {
+    $('.button-collapse').sideNav({
+      menuWidth: 240, // Default is 240
+      edge: 'left', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    });
 
-app.controller('ChatCtrl', ['$scope', function($scope) {
+    $('.tooltipped').tooltip({delay: 50});
+  });
 
   $scope.rooms = [];
   $scope.id = userId;
@@ -30,7 +38,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
 
   $scope.sendMessage = function() {
     var loc;
-    $('.gold-pills > li').each(function(index) {
+    $('#class-nav > li').each(function(index) {
       if($(this).hasClass('active')) {
         loc = index;
       }
@@ -38,21 +46,25 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
 
     if(typeof loc == 'undefined') {
       console.log("Can't send a message if no chat rooms are active!!!");
-    }else
-    {
+    } else {
     
-      var message = {"group_name": $scope.rooms[loc]["group_name"], "group_id": $scope.rooms[loc]["group_id"], "message": $scope.inputText, "username": $scope.username, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous};
-      if($scope.isAnonymous) {
-        message["username"] = "Anonymous";
+      if ($scope.inputText.length > 0) {
+        var message = {"group_name": $scope.rooms[loc]["group_name"], "group_id": $scope.rooms[loc]["group_id"], "message": $scope.inputText, "username": $scope.username, "user_id": $scope.id, "isAnonymous": $scope.isAnonymous};
+        if($scope.isAnonymous) {
+          message["username"] = "Anonymous";
+        }
+        console.log("Sending message...");
+        console.log( message);
+        socket.emit('new message', message);
+
+        $scope.inputText = ''; // Explicitly reset the input on DOM.
+      } else {
+        console.log("Cannot send message of length 0.");
       }
-      console.log("Sending message...");
-      console.log( message);
-      socket.emit('new message', message);
       //$scope.rooms[loc]['messages'] = $scope.rooms[loc]['messages'].concat(message);
       //console.log("Message sent. Rooms JSON...");
       //console.log($scope.rooms);
     }
-
   };
 
   socket.on('add rooms', function(msg) {
@@ -65,8 +77,8 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     $scope.$apply();
 
     /* Sets the first pill to active and shows its content if all inactive  */
-    if(!$('.gold-pills .active').length) {
-      $('.gold-pills li:first').addClass('active');
+    if(!$('#class-nav .active').length) {
+      $('#class-nav li:first').addClass('active');
       $('.tab-pane:first').addClass('active');
     }
   });
@@ -89,7 +101,7 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     }
     $scope.$apply();
     $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
-    console.log("should have scrolled noob");
+    console.log("should have scrolled on message");
   });
 
   socket.on('disconnect', function() {
@@ -100,11 +112,12 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     location.reload();
   });
 
+  /* Scrolls to the bottom of the chat */
   $scope.scrollDownChat = function(tab) {
-    console.log("scroll down chat...");
+    console.log("scroll down chat on tab change...");
     console.log(tab);
     $('#message-pane').scrollTop($('#message-pane')[0].scrollHeight);
-    console.log("scroll down chat DONE");
+    console.log("scroll down chat on tab change DONE");
   };
 
   $scope.leaveGroup = function(data) {
@@ -120,4 +133,18 @@ app.controller('ChatCtrl', ['$scope', function($scope) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
+  /* Switches the active tab of the class-nav */
+  $scope.switchActiveTab = function(tab) {
+    console.log("switch active tab fn", tab);
+    // Remove active class on all tabs
+    $('#class-nav > li').removeClass('active');
+
+    // Add active class on pressed tab.
+    $($('#class-nav > li')[tab]).addClass('active');
+  }
+
+  /* Determines whether tab is active. */
+  $scope.isTabActive = function(index) {
+    return $($('#class-nav > li')[index]).hasClass('active');
+  }
 }]);

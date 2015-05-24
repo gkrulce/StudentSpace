@@ -2,8 +2,43 @@ body {
   overflow: hidden;
 }
 
-.circle {
+.btn.circle {
   border-radius: 50%;
+}
+
+.btn.class {
+  height: 25px;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 25px;
+}
+
+.btn.class.remove {
+  right: 0;
+}
+
+.btn.class.info {
+  right: 30px;
+}
+
+.btn.circle i {
+  left: 0px;
+  position: relative;
+  top: -6px;
+}
+
+.username.circle {
+  cursor: default;
+  font-size: 20pt;
+  height: 32px;
+  line-height: normal;
+  margin: 0 6px 0 0;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  width: 32px;
 }
 
 .arrive {
@@ -20,9 +55,10 @@ body {
 .chat-bubble {
   border-radius: 20px;
   display: inline-block;
-  font-size: 11pt;
+  font-size: 10pt;
+  height: 100%;
   max-width: 60%;
-  padding: 5px 10px 5px 10px;
+  padding: 7px 10px 7px 10px;
   word-wrap: break-word;
 }
 
@@ -33,7 +69,7 @@ p {
 
 .chat-block {
   display: flex;
-  margin: 3px;
+  margin: 2px;
   position: relative;
   width: 100%;
 }
@@ -66,11 +102,12 @@ p {
   height: 20px;
   opacity: 0.5;
   padding: 0;
-  transition: all 0.35s cubic-bezier(0,0.5,0,1);
+  transition: all 0.35s cubic-bezier(0,0.5,0.6,1);
   width: 20px;
 }
 
-form {
+.input-box {
+  box-sizing: border-box;
   background-color: #fff;
   border-top: 1px solid #aaa;
   bottom: 0;
@@ -78,17 +115,35 @@ form {
   width: 100%;
 }
 
-.input-box {
-  box-sizing: border-box;
+.anon-box {
+  display: inline-block;
 }
 
-input[type=text] {
+.input-field {
+  margin: 0;
+}
+
+.input-field label {
+  top: 0;
+}
+
+.input-field input[type=text] {
   border: none;
-  border-right: 1px solid #aaa;
   box-sizing: border-box;
   height: 45px;
+  margin: 0;
   padding: 10px;
-  width: 50%;
+  width: calc(100% - 80px);
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 0px solid #2979ff;
+}
+
+@media screen and (min-width: 992px) { /* big screen */
+  .input-field input[type=text] {
+    width: calc(100% - 320px);
+  }
 }
 
 .col-xs-2.sidebar {
@@ -102,13 +157,27 @@ input[type=text] {
 }
 
 .chat-area {
-  height: calc(100vh - 100px);
-  padding: 0;
+  height: 100vh;
+  padding: 0 0 102px 0;
   position: relative;
 }
 
+@media screen and (min-width: 601px) { /* medium screen */
+  .chat-area {
+    padding: 0 0 110px 0;
+  }
+}
+
+@media screen and (min-width: 992px) { /* big screen */
+  .chat-area {
+    left: 240px;
+    padding: 0 0 110px 0;
+    width: calc(100% - 240px);
+  }
+}
+
 #message-pane {
-  height: 95%;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   padding: 0 10px 0 10px;
@@ -123,13 +192,13 @@ input[type=text] {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 7px;
 }
  
 ::-webkit-scrollbar-track {
   background-color: none;
   border-radius: 10px;
-  transition: all 0.25s cubic-bezier(0,0.5,0,1);
+  transition: all 0.25s cubic-bezier(0,0.5,0.6,1);
 }
 
 ::-webkit-scrollbar-track:hover {
@@ -139,4 +208,61 @@ input[type=text] {
 ::-webkit-scrollbar-thumb {
   background-color: #aaa;
   border-radius: 10px;
+}
+
+nav.navbar {
+  position: fixed;
+}
+
+.side-nav.fixed {
+  border-right: 1px solid #aaa;
+  box-shadow: none;
+  height: calc(100% - 65px);
+  top: 65px;
+}
+
+.side-nav.fixed a {
+  position: relative; /* Allows .class-remove to vert center */
+}
+
+.side-nav li a {
+  position: relative; /* Allows .class-remove to vert center */
+}
+
+#class-nav > li {
+  border-bottom: 1px solid #ddd;
+}
+
+nav .brand-logo {
+  font-family: 'Obitron', sans-serif;
+  font-weight: 400;
+  padding: 0 20px 0 20px;
+  text-transform: uppercase;
+}
+
+nav .button-collapse {
+  text-align: center;
+  width: 70px;
+}
+
+
+nav ul li {
+  transition: background-color 0.25s cubic-bezier(0,0.5,0.6,1);
+}
+
+nav ul li.header {
+}
+
+.btn.sender {
+  background: #fff;
+  height: 44px;
+  line-height: inherit;
+  padding: 0;
+  position: relative;
+  right: 0;
+  width: 34px;
+}
+
+.btn.sender i {
+  font-size: 2.0rem;
 }
