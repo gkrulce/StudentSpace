@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: StudyTree
+-- Host: localhost    Database: ucsdspace
 -- ------------------------------------------------------
 -- Server version	5.5.41-0ubuntu0.14.04.1-log
 
@@ -24,7 +24,6 @@ DROP TABLE IF EXISTS `class_groups`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `class_groups` (
   `id` int(11) NOT NULL,
-  `class_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `class_groups_ibfk_1` FOREIGN KEY (`id`) REFERENCES `groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -42,7 +41,7 @@ CREATE TABLE `groups` (
   `name` varchar(255) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,9 +61,24 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `group_id` (`group_id`),
   KEY `user_pid` (`user_pid`),
-  CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_pid`) REFERENCES `users` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27492 DEFAULT CHARSET=latin1;
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_pid`) REFERENCES `users` (`pid`),
+  CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27624 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `study_group_times`
+--
+
+DROP TABLE IF EXISTS `study_group_times`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `study_group_times` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `offset` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,10 +92,12 @@ CREATE TABLE `study_groups` (
   `id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   `long_desc` text,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `class_id` (`class_id`),
+  KEY `time` (`time`),
+  CONSTRAINT `study_groups_ibfk_4` FOREIGN KEY (`time`) REFERENCES `study_group_times` (`id`),
   CONSTRAINT `study_groups_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class_groups` (`id`),
   CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -131,4 +147,4 @@ CREATE TABLE `users_to_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-17  1:00:17
+-- Dump completed on 2015-05-24 20:58:53
