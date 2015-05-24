@@ -69,7 +69,7 @@
         <?php
           foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
           {
-            $date = new DateTime($row['start_date_time']);
+            $date = new DateTime($row['date']);
             echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
             echo '<td>' . $row['group_name'] . '</td>';
 
@@ -78,7 +78,7 @@
             {
               echo '<span class="fa fa-user"></span>';
             }
-            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $date->format("g:i A") . '</td>';
+            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $row['time'] . '</td>';
             echo '</tr>';
             echo '<tr><td colspan="10" class="expandable"><div class="container"><div class="secret">' .
             $row['long_desc'] . '<a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-check"></span></a></div></td></tr>';

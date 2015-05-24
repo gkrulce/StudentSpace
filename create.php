@@ -68,9 +68,6 @@
     if(!validateDate($_POST['date'], 'Y-m-d'))
     {
       echo '<div class="alert alert-danger" role="alert">The date must be given in the format YYYY-MM-DD (You gave ' . $_POST['date'] . ') </div>';
-    } else if(!validateDate($_POST['start_time'], 'H:i'))
-    {
-      echo '<div class="alert alert-danger" role="alert">The time must be given in the format HH:MM (You gave ' . $_POST['start_time'] . ') </div>';
     }else if($_SESSION['user']->createStudyGroup($db, $_POST))
     {
       echo '<div class="alert alert-success" role="alert">Study Group successfully created. Go to the chat and introduce yourself!</div>';
@@ -97,26 +94,18 @@
     </div>
   </div>
 
-  <!-- Text input-->
-  <div class="form-group">
-    <label class="col-md-4 control-label" for="start_time">Start Time</label>  
-    <div class="col-md-4">
-      <input id="start_time" name="start_time" type="time" class="form-control input-md" required="" value="<?php if(isset($_POST['start_time'])) {echo $_POST['start_time'];} else {echo "20:00";} ?>" step=900>
-    <span class="help-block">What time do you want to meet?</span>  
-    </div>
-  </div>
-
   <!-- Select Basic -->
   <div class="form-group">
-    <label class="col-md-4 control-label" for="length">Length (Hours)</label>
+    <label class="col-md-4 control-label" for="class_id">Time</label>
     <div class="col-md-4">
-      <select id="length" name="length" class="form-control">
-        <option value="1">1 Hour</option>
-        <option value="2">2 Hours</option>
-        <option value="3">3 Hours</option>
-        <option value="4">4 Hours</option>
-        <option value="6">6 Hours</option>
-        <option value="8">8 Hours</option>
+      <select name="time" class="input-xlarge">
+
+        <?php
+        foreach($db->query('SELECT id, name FROM study_group_times;') as $row)
+        {
+          echo '<option value="'. $row["id"].'">' . $row["name"] . '</option>';
+        }
+        ?>
       </select>
     </div>
   </div>
@@ -125,7 +114,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="class_id">Class</label>
     <div class="col-md-4">
-      <select id="classSelectId" name="class_id" class="input-xlarge">
+      <select name="class_id" class="input-xlarge">
 
         <?php
         foreach($_SESSION['user']->getClasses($db) as $row)

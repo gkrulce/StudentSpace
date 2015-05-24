@@ -99,7 +99,7 @@ function getUserInformation(uid, socket) {
 };
 
 function getChatRooms(uid, socket) {
-  var sql = 'SELECT g.name group_name, IF(g.id IN (SELECT id from class_groups), 0, 1) is_study_group, g.hash group_id, sg.long_desc, sg.start_time, sg.end_time, gg.name class_name, (SELECT COUNT(*) FROM users_to_groups where group_id = g.id) group_size FROM users_to_groups ug JOIN groups g ON ug.group_id = g.id JOIN users u ON user_pid = u.pid LEFT JOIN study_groups sg on g.id = sg.id left join groups gg on gg.id = sg.class_id WHERE (sg.end_time > NOW() OR sg.id IS NULL) AND u.hash = ?;';
+  var sql = 'SELECT g.name group_name, IF(g.id IN (SELECT id from class_groups), 0, 1) is_study_group, g.hash group_id, sg.long_desc, sg.date, t.name time, gg.name class_name, (SELECT COUNT(*) FROM users_to_groups where group_id = g.id) group_size FROM users_to_groups ug JOIN groups g ON ug.group_id = g.id JOIN users u ON user_pid = u.pid LEFT JOIN study_groups sg on g.id = sg.id left JOIN groups gg ON gg.id = sg.class_id LEFT JOIN study_group_times t ON sg.time = t.id WHERE (sg.id IS NULL OR DATE_ADD(sg.date, INTERVAL t.offset HOUR) > DATE_SUB(NOW(), INTERVAL 7 HOUR)) AND u.hash = ?;';
   sql = mysql.format(sql, uid);
   db.query(sql, function(err, rows, fields) {
     console.log(rows);
