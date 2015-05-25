@@ -34,7 +34,7 @@ $(document).ready(function() {
     $.post('php/joinStudyGroup.php', {id: groupId}, function(data) {
       $('#' + groupId).closest('tr').hide();
       $('#' + groupId).closest('tr').prev('tr').hide();
-      $('.alert.hide.alert-success').removeClass('hide');
+      window.location.replace("chat.php?action=join");
     }).fail(function() {
       $('.alert.hide.alert-danger').removeClass('hide');
     });

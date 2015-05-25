@@ -54,7 +54,6 @@
     </nav>
 
     <div class="container">
-      <div class="alert alert-success hide" role="alert"> Study group successfully joined. </div>
       <div class="alert alert-danger hide" role="alert"> Study group not joined. </div>
       <h2 class="text-center"> Need a study group? </h2>
       <h3 class="text-center"> Join one! </h3>

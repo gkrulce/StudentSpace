@@ -70,8 +70,8 @@
       echo '<div class="alert alert-danger" role="alert">The date must be given in the format YYYY-MM-DD (You gave ' . $_POST['date'] . ') </div>';
     }else if($_SESSION['user']->createStudyGroup($db, $_POST))
     {
-      echo '<div class="alert alert-success" role="alert">Study Group successfully created. Go to the chat and introduce yourself!</div>';
       unset($_POST);
+      header('Location: chat.php?action=join');
     }else
     {
       echo '<div class="alert alert-danger" role="alert">There was an error upon study group creation. Sorry!</div>';

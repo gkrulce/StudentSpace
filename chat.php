@@ -38,6 +38,23 @@
 
   <body ng-controller="ChatCtrl">
 
+  <!-- Model displays after study group creation -->
+  <div id="createModal" class="modal">
+    <div class="modal-content">
+      <h4>You've joined a group!</h4>
+      <p>Pro tips: </p>
+      <ol>
+        <li>Introduce yourself (name, major, etc...). It'll break the ice! </li>
+        <li>Figure out a time and place to meet up. </li>
+        <li>Prepare before coming: don't show up clueless. You'll only learn if you're willing to put in the effort.</li>
+      </ol>
+      
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Lets do this!</a>
+    </div>
+  </div>
+
     <nav class="blue darken-4">
       <a href="#" data-activates="slide-out" class="button-collapse">
         <i class="mdi-navigation-menu"></i>
@@ -150,6 +167,14 @@
     <!-- Import jQuery before boostrap/materialize -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <script>
+      <?php
+        if(isset($_GET['action']) && $_GET['action'] == 'join') {
+          echo '$("#createModal").openModal();';
+        }
+      ?>
+    </script>
 
   </body>
 </html>
