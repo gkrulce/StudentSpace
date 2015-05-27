@@ -1,11 +1,7 @@
 <?php
-  include('Student.php');
+  include('session.php');
   $username=$_POST['user_name'];
-  
-  $stmt = $GLOBALS['db']->prepare("SELECT * FROM users where username = :userName;");
-  $stmt->bindParam(":userName", $username, PDO::PARAM_STR);
-  $stmt->execute();
-  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $row = Procedures::login($db, $username);
 
   if($row)
   {

@@ -51,7 +51,7 @@
       </ol>
     </div>
     <div class="modal-footer">
-      <a class=" modal-action modal-close waves-effect waves-green btn-flat">Lets do this!</a>
+      <a href = "chat.php" class=" modal-action modal-close waves-effect waves-green btn-flat">Lets do this!</a>
     </div>
   </div>
 

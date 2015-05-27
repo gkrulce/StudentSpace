@@ -57,17 +57,30 @@
 <div class="container">
 <?php
 
-  function validateDate($date, $format)
-  {
+  function validateDate($date, $format) {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) == $date;
   }
 
+  function validateTime($date, $offset) {
+    $date->add(new DateInterval('PT' . $offset . 'H'));
+    $now = new DateTime();
+    $now->sub(new DateInterval('PT7H'));
+    // Debugging information left here to test the time on the server
+    //var_dump($date);
+    //var_dump($now);
+    return $date >= $now;
+  }
+
   if(isset($_POST['submit_button']))
   {
+    $date = new DateTime($_POST['date']);
+    $offset = Procedures::getOffset($db, $_POST['time']);
     if(!validateDate($_POST['date'], 'Y-m-d'))
     {
       echo '<div class="alert alert-danger" role="alert">The date must be given in the format YYYY-MM-DD (You gave ' . $_POST['date'] . ') </div>';
+    }else if(!validateTime($date, $offset)) {
+      echo '<div class="alert alert-danger" role="alert">You tried to create a study group in the past.</div>';
     }else if($_SESSION['user']->createStudyGroup($db, $_POST))
     {
       unset($_POST);
@@ -101,9 +114,9 @@
       <select name="time" class="input-xlarge">
 
         <?php
-        foreach($db->query('SELECT id, name FROM study_group_times;') as $row)
+        foreach(Procedures::getStudyTimes($db) as $row)
         {
-          echo '<option value="'. $row["id"].'">' . $row["name"] . '</option>';
+          echo '<option value="'. $row["id"].'">' . $row["name"] . ' ' . $row["time_range"] . '</option>';
         }
         ?>
       </select>
