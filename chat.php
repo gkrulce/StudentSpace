@@ -41,17 +41,17 @@
   <!-- Model displays after study group creation -->
   <div id="createModal" class="modal">
     <div class="modal-content">
-      <h4>You've joined a group!</h4>
+      <h4>Welcome to your Space!</h4>
       <p>Pro tips: </p>
       <ol>
-        <li>Introduce yourself (name, major, etc...). It'll break the ice! </li>
-        <li>Figure out a time and place to meet up. </li>
-        <li>Prepare before coming: don't show up clueless. You'll only learn if you're willing to put in the effort.</li>
+        <li><strong>Introduce yourself</strong> (name, major, etc...). It'll break the ice! </li>
+        <li>Figure out a <strong>time and place</strong> to meet up. </li>
+        <li>Prepare before coming: <strong>don't show up clueless</strong>. You'll only learn if you're willing to put in the effort.</li>
+        <li>Don't be discouraged by weaker students. Studies show that <strong>group diversity improves learning</strong>.</li>
       </ol>
-      
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Lets do this!</a>
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat">Lets do this!</a>
     </div>
   </div>
 
