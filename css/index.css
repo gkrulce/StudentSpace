@@ -41,8 +41,8 @@ header {
 
 @media screen and (max-width: 767px) {
   header #logo {
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 55px;
+    line-height: 55px;
   }
 
   header #motto {
@@ -67,7 +67,7 @@ header {
 
 #logo {
   color: #fff;
-  font-family: Roboto, sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 125px;
   font-weight: normal;
   line-height: 110px;
