@@ -7,24 +7,23 @@ h2 {
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 60px;
   position: relative;
+  margin: 20px auto 50px auto;
 }
 
 /* Buttons */
 
 .btn-lg {
-  background-color: rgba(255, 201, 31, 1);
+  background-color: rgba(255, 201, 31, 1); 
   margin: 50px 0 0 0;
   transition: all 0.3s cubic-bezier(0.17, 0.67, 0.44, 0.99);
   width: 100%;
-}
-
-.btn-lg strong {
-  color: #fff;
+  color: #FFF;
 }
 
 .btn-lg:hover {
   background-color: rgba(255, 219, 80, 1);
   box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  color: #FFF;
 }
 
 /* Header section */
@@ -36,14 +35,14 @@ header {
   background-size: cover;
   background-image: url(../images/geisel-large.jpg);
   color: #fff;
-  height: 100vh;
+  height: 80vh;
   text-align: center;
 }
 
 @media screen and (max-width: 767px) {
   header #logo {
-    font-size: 60px;
-    line-height: 60px;
+    font-size: 40px;
+    line-height: 40px;
   }
 
   header #motto {
@@ -160,8 +159,8 @@ section {
 }
 
 .fa-sign-in, .fa-users, .fa-graduation-cap {
-  color: #ffce36;
-  font-size: 3em;
+  color: rgb(33, 105, 236);
+  font-size: 6em;
   margin: 15px 0 0 0;
   transition: all 0.3s cubic-bezier(0.17, 0.67, 0.44, 0.99);
 }
@@ -169,22 +168,24 @@ section {
 #how-it-works .col-md-4:hover .fa-sign-in,
     #how-it-works .col-md-4:hover .fa-users,
     #how-it-works .col-md-4:hover .fa-graduation-cap {
-  color: rgba(255, 219, 80, 1);
-  text-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  /*color: rgba(255, 219, 80, 1);
+  text-shadow: 0 10px 20px rgba(0,0,0,0.3);*/
 }
 
 #how-it-works {
   background-attachment: fixed;
-  background-image: url(../images/amazon.jpg);
+  background-image: url(../images/pier.jpg);
   background-size: cover;
-  color: #fff;
+  color: #000;
   height: 100%;
   position: relative;
   width: 100%;
+  filter: blur(5px);
+  background-position: center;
 }
 
 .overlay {
-  background-color: rgba(9, 35, 71, 0.7);
+  background-color: rgb(191, 191, 63, .5);
   height: inherit;
   margin: -20px;
   position: absolute;
@@ -199,6 +200,10 @@ section {
 }
 
 #how-it-works h3 {
-  margin-top: 10px;
+  margin: 50px auto 20px auto;
   display: block;
+}
+
+#how-it-works h4 {
+  margin-bottom: 75px;
 }
