@@ -44,7 +44,7 @@
           <ul class="nav navbar-nav">
             <li role="presentation" class="active"><a href="view.php">View</a></li>
             <li role="presentation"><a href="create.php">Create</a></li>
-            <li role="presentation"><a href="chat.php">Chat</a></li>
+            <li role="presentation"><a href="chat.php">My Spaces</a></li>
             <li role="presentation"><a href="settings.php">Settings</a></li>
             <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
             <li role="presentation"><a href="logout.php">Logout</a></li>
@@ -55,15 +55,16 @@
 
     <div class="container">
       <div class="alert alert-danger hide" role="alert"> Study group not joined. </div>
-      <h2 class="text-center"> Need a study group? </h2>
-      <h3 class="text-center"> Join one! </h3>
+      <h2 class="text-center">StudentSpaces for your classes</h2>
+      <h2><small></small></h2>
       <table class="table table-bordered">
         <tr>
           <th>Class Name</th>
           <th>Title</th>
           <th>Group Size</th>
-          <th>Date</th>
           <th>Time</th>
+          <th>Date</th>
+          <th>More Information</th>
         </tr>
         <?php
           foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
@@ -77,7 +78,8 @@
             {
               echo '<span class="fa fa-user"></span>';
             }
-            echo '</td><td>' . $date->format("F, D j") . '</td><td>' . $row['time'] . '</td>';
+            echo '</td><td>' . $row['time'] . '</td><td>' . $date->format("F, D j") . '</td>';
+            echo '<td><button type="button" class="btn btn-primary"><i class="fa fa-expand"></i></button></td>';
             echo '</tr>';
             echo '<tr><td colspan="10" class="expandable"><div class="container"><div class="secret">' .
             $row['long_desc'] . '<a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-check"></span></a></div></td></tr>';

@@ -64,7 +64,7 @@
       <ul class="navbar right hide-on-med-and-down">
         <li><a href="view.php">View</a></li>
         <li><a href="create.php">Create</a></li>
-        <li class="active"><a href="chat.php">Chat</a></li>
+        <li class="active"><a href="chat.php">My Spaces</a></li>
         <li><a href="settings.php">Settings</a></li>
         <li><a class="blue-text text-lighten-1" href="feedback.php">Feedback</a></li>
       </ul>

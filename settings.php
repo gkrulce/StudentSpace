@@ -44,7 +44,7 @@
           <ul class="nav navbar-nav">
             <li role="presentation"><a href="view.php">View</a></li>
             <li role="presentation"><a href="create.php">Create</a></li>
-            <li role="presentation"><a href="chat.php">Chat</a></li>
+            <li role="presentation"><a href="chat.php">My Spaces</a></li>
             <li role="presentation" class="active"><a href="settings.php">Settings</a></li>
             <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
             <li role="presentation"><a href="logout.php">Logout</a></li>
