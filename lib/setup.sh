@@ -1,9 +1,11 @@
 #! /bin/bash
 
+# Download HTMLPurifier
+purifierVersion="htmlpurifier-4.7.0"
 echo "Deleting old files, downloading new files, and installing purifier"
 rm -rf htmlpurifier
-wget http://htmlpurifier.org/releases/htmlpurifier-4.6.0.tar.gz
-tar -xf htmlpurifier-4.6.0.tar.gz
-mv htmlpurifier-4.6.0 htmlpurifier
-rm htmlpurifier-4.6.0.tar.gz
+wget "http://htmlpurifier.org/releases/$purifierVersion.tar.gz"
+tar -xf "$purifierVersion.tar.gz"
+mv $purifierVersion htmlpurifier
+rm "$purifierVersion.tar.gz"
 chmod -R 777 htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer
