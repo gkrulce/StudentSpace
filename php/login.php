@@ -7,7 +7,7 @@
   {
     session_start();
     $_SESSION['user'] = new Student($row["pid"], $row["name"], $row["hash"]);
-    header('Location: ../view.php');
+    header('Location: ../secure/view.php');
   }else
   {
     echo "Try username: demo.\n";

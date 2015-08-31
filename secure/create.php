@@ -1,5 +1,5 @@
 <?php
-  include('php/session.php');
+  include('../php/session.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
     <script src="//cdn.ckeditor.com/4.4.7/basic/ckeditor.js"></script>
   </head>

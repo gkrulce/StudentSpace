@@ -1,5 +1,5 @@
 <?php
-  include('php/session.php');
+  include('../php/session.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,7 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
   </head>
 
@@ -42,56 +42,55 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li role="presentation" class="active"><a href="view.php">View</a></li>
+            <li role="presentation"><a href="view.php">View</a></li>
             <li role="presentation"><a href="create.php">Create</a></li>
             <li role="presentation"><a href="chat.php">My Spaces</a></li>
             <li role="presentation"><a href="settings.php">Settings</a></li>
-            <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
+            <li role="presentation" class="active" id="nav-accent"><a href="feedback.php">Feedback</a></li>
             <li role="presentation"><a href="logout.php">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="container">
-      <div class="alert alert-danger hide" role="alert"> Study group not joined. </div>
-      <h2 class="text-center">StudentSpaces for your classes</h2>
-      <h2><small></small></h2>
-      <table class="table table-bordered">
-        <tr>
-          <th>Class Name</th>
-          <th>Title</th>
-          <th>Group Size</th>
-          <th>Time</th>
-          <th>Date</th>
-          <th>More Information</th>
-        </tr>
-        <?php
-          foreach($_SESSION['user']->getAllStudyGroups($db) as $row)
-          {
-            $date = new DateTime($row['date']);
-            echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
-            echo '<td>' . $row['group_name'] . '</td>';
+<div class="container">
+  <?php
+    if(isset($_POST['singlebutton'])) {
+      //TODO SEND EMAIL
+      echo '<div class="alert alert-success" role="alert">Feedback successfully submitted!</div>';
+      unset($_POST);
+    }
+  ?>
+  <form class="form-horizontal" action="feedback.php" method="post">
+  <fieldset>
 
-            echo '<td>';
-            for($i = 0 ; $i < $row['group_size']; $i++)
-            {
-              echo '<span class="fa fa-user"></span>';
-            }
-            echo '</td><td>' . $row['time'] . '</td><td>' . $date->format("F, D j") . '</td>';
-            echo '<td><button type="button" class="btn btn-primary"><i class="fa fa-expand"></i></button></td>';
-            echo '</tr>';
-            echo '<tr><td colspan="10" class="expandable"><div class="container"><div class="secret">' .
-            $row['long_desc'] . '<a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-check"></span></a></div></td></tr>';
-          }
-        ?>
-      </table>
+  <!-- Form Name -->
+  <legend>Feedback</legend>
+
+  <!-- Textarea -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="feedback">This form directly contacts our development team.</label>
+    <div class="col-md-4">                     
+      <textarea class="form-control" id="feedback" name="feedback"></textarea>
     </div>
+  </div>
+
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton"></label>
+    <div class="col-md-4">
+      <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit!</button>
+    </div>
+  </div>
+
+  </fieldset>
+  </form>
+</div>
+    
 
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="js/view.js"></script>
 
   </body>
 </html>

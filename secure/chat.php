@@ -1,5 +1,5 @@
 <?php
-  include('php/session.php');
+  include('../php/session.php');
 ?>
 <!DOCTYPE html>
 <html lang="en" class="full-height" ng-app="ChatApp">
@@ -14,14 +14,14 @@
     <title>&#9829 Space @ UCSD</title>
 
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen,projection"/>
     <!-- Font awesome CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/chat.css">
     <!-- Angular JS -->
 <!--
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>

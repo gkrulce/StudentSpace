@@ -6,7 +6,7 @@ session_start();
 // Storing Session
 if(!isset($_SESSION['user']))
 {
-	header('Location: index.html');
+	header('Location: ../index.html');
 }
 
 ?>
