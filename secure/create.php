@@ -11,46 +11,43 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>&#9829 StudyTree</title>
+    <title>&#9829 StudentSpace</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 
-    <!-- Font awesome CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/main.css">
-
-    <script src="//cdn.ckeditor.com/4.4.7/basic/ckeditor.js"></script>
+    <link rel="stylesheet" href="css/main.css">
   </head>
 
   <body>
-
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">StudyTree</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li role="presentation"><a href="view.php">View</a></li>
-            <li role="presentation" class="active"><a href="create.php">Create</a></li>
-            <li role="presentation"><a href="chat.php">My Spaces</a></li>
-            <li role="presentation"><a href="settings.php">Settings</a></li>
-            <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
-            <li role="presentation"><a href="logout.php">Logout</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+    <nav>
+      <div class="nav-wrapper blue darken-4">
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" class="brand-logo">space<span class="amber-text text-darken-1">@ucsd</span></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="view.php">View</a></li>
+          <li class="active"><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+        <ul id="mobile-demo" class="side-nav right">
+          <li><a href="view.php">View</a></li>
+          <li class="active"><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -96,14 +93,13 @@
   <fieldset>
 
   <!-- Form Name -->
-  <legend>Create your own study group to study at YOUR convenience!</legend>
+  <legend>Create a own study group to study on your time!</legend>
 
   <!-- Text input-->
   <div class="form-group">
     <label class="col-md-4 control-label" for="date">Date</label>  
     <div class="col-md-4">
       <input id="date" name="date" type="date" class="form-control input-md" required="" value="<?php if (isset($_POST['date'])) { echo $_POST['date']; } else { echo date('Y-m-d'); } ?>">
-    <span class="help-block">Which day do you want to meet?</span>  
     </div>
   </div>
 
@@ -111,15 +107,17 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="class_id">Time</label>
     <div class="col-md-4">
-      <select name="time" class="input-xlarge">
+      <div class="input-field col s12">
+        <select class="browser-default" name="time">
 
-        <?php
-        foreach(Procedures::getStudyTimes($db) as $row)
-        {
-          echo '<option value="'. $row["id"].'">' . $row["name"] . ' ' . $row["time_range"] . '</option>';
-        }
-        ?>
-      </select>
+          <?php
+          foreach(Procedures::getStudyTimes($db) as $row)
+          {
+            echo '<option value="'. $row["id"].'">' . $row["name"] . ' ' . $row["time_range"] . '</option>';
+          }
+          ?>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -127,15 +125,17 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="class_id">Class</label>
     <div class="col-md-4">
-      <select name="class_id" class="input-xlarge">
+      <div class="input-field col s12">
+        <select name="class_id" class="browser-default">
 
-        <?php
-        foreach($_SESSION['user']->getClasses($db) as $row)
-        {
-          echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
-        }
-        ?>
-      </select>
+          <?php
+          foreach($_SESSION['user']->getClasses($db) as $row)
+          {
+            echo '<option value="'. $row["class_id"].'">' . $row["class_name"] . '</option>';
+          }
+          ?>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -144,7 +144,6 @@
     <label class="col-md-4 control-label" for="shortTitle">Title</label>  
     <div class="col-md-4">
       <input id="shortTitle" name="short_desc" type="text" placeholder="eg. Midterm 1 or Homework 2" class="form-control input-md" required="" value="<?php if(isset($_POST['short_desc'])) {echo $_POST['short_desc'];} ?>">
-    <span class="help-block">What are you studying?</span>  
     </div>
   </div>
 
@@ -156,7 +155,6 @@
       <script>
         CKEDITOR.replace('long_desc');
       </script>
-      <span class="help-block">How are you studying? List a few specific actions you want to accomplish during this study group.</span>  
     </div>
   </div>
 
@@ -164,7 +162,7 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="submit_button"></label>
     <div class="col-md-4">
-      <button id="submit_button" name="submit_button" class="btn btn-primary">Create</button>
+      <button id="submit_button" name="submit_button" class="btn light-blue accent-3">Create</button>
     </div>
   </div>
 
@@ -174,11 +172,6 @@
 
   </div>
 </div>
-    
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
   </body>
 </html>

@@ -11,21 +11,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>&#9829 Space @ UCSD</title>
+    <title>&#9829 StudentSpace</title>
 
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="../css/materialize.css"  media="screen,projection"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+
     <!-- Font awesome CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/chat.css">
     <!-- Angular JS -->
-<!--
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.js"></script>
@@ -219,10 +222,6 @@
         </div>
       </form>
     </div> <!-- End of .chat-area -->
-    
-    <!-- Import jQuery before boostrap/materialize -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <script>
       <?php

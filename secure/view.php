@@ -11,57 +11,54 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>&#9829 StudyTree</title>
+    <title>&#9829 StudentSpace</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 
-    <!-- Font awesome CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/main.css">
-
+    <link rel="stylesheet" href="css/main.css">
   </head>
 
   <body>
-
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">StudyTree</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li role="presentation" class="active"><a href="view.php">View</a></li>
-            <li role="presentation"><a href="create.php">Create</a></li>
-            <li role="presentation"><a href="chat.php">My Spaces</a></li>
-            <li role="presentation"><a href="settings.php">Settings</a></li>
-            <li role="presentation" id="nav-accent"><a href="feedback.php">Feedback</a></li>
-            <li role="presentation"><a href="logout.php">Logout</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+    <nav>
+      <div class="nav-wrapper blue darken-4">
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" class="brand-logo">space<span class="amber-text text-darken-1">@ucsd</span></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="active"><a href="view.php">View</a></li>
+          <li><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+        <ul id="mobile-demo" class="side-nav right">
+          <li class="active"><a href="view.php">View</a></li>
+          <li><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
       </div>
     </nav>
 
     <div class="container">
       <div class="alert alert-danger hide" role="alert"> Study group not joined. </div>
-      <h2 class="text-center">StudentSpaces for your classes</h2>
+      <h2 class="text-center">Join a StudentSpace</h2>
       <h2><small></small></h2>
       <table class="table table-bordered">
-        <tr>
+        <tr class="blue accent-3">
           <th>Class Name</th>
           <th>Title</th>
-          <th>Group Size</th>
           <th>Time</th>
           <th>Date</th>
           <th>More Information</th>
@@ -73,25 +70,19 @@
             echo '<tr class="data-row"><td>' . $row['class_name'] . '</td>';
             echo '<td>' . $row['group_name'] . '</td>';
 
-            echo '<td>';
+            echo '<td>' . $row['time'] . '</td><td>' . $date->format("F, D j") . '</td>';
+            echo '<td><button type="button" class="btn light-blue accent-3">+<i class="material-icons small system_update_alt"></i></button></td>';
+            echo '</tr>';
+            echo '<tr><td colspan="10" class="expandable"><div class="secret">Group size: ';
             for($i = 0 ; $i < $row['group_size']; $i++)
             {
-              echo '<span class="fa fa-user"></span>';
+              echo 'X';
             }
-            echo '</td><td>' . $row['time'] . '</td><td>' . $date->format("F, D j") . '</td>';
-            echo '<td><button type="button" class="btn btn-primary"><i class="fa fa-expand"></i></button></td>';
-            echo '</tr>';
-            echo '<tr><td colspan="10" class="expandable"><div class="container"><div class="secret">' .
-            $row['long_desc'] . '<a role="button" class="btn btn-primary joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join<span class="fa fa-check"></span></a></div></td></tr>';
+            echo $row['long_desc'] . '<a role="button" class="btn blue accent-4 joinStudyGroupBtn" id="' . $row['group_id'] . '" href="#">Join</a></div></td></tr>';
           }
         ?>
       </table>
     </div>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="../js/view.js"></script>
-
+    <script src="js/view.js"></script>
   </body>
 </html>

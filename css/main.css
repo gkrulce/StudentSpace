@@ -22,11 +22,15 @@ html {
 th {
   text-transform: uppercase;
   color: #FFF;
-  background-color: #0088EA;
+  border-radius: 0;
+}
+
+td {
+  border: 1px solid #eee;
+  border-radius: 0;
 }
 
 table>tbody>tr>td.expandable {
-  border: 0 solid #ff0000;
   padding: 0;
 }
 
@@ -54,13 +58,13 @@ table>tbody>tr>td.expandable {
 }
 
 @media screen and (min-width: 767px) {
-.data-row.current:hover {
-  background-color: rgb(255,193,35);
-}
+  .data-row.current:hover {
+    background-color: rgb(255,193,35);
+  }
 
-.data-row:hover {
-  background-color: #eee ;
-}
+  .data-row:hover {
+    background-color: #eee ;
+  }
 }
 
 .full-height {
@@ -69,4 +73,19 @@ table>tbody>tr>td.expandable {
 
 #nav-accent > a{
   color: #0088EA;
+}
+
+nav .brand-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 400;
+  padding: 0 20px 0 20px;
+}
+
+
+form {
+  margin: 20px 0 0 0;
+}
+
+.form-group {
+  margin: 10px 0 20px 0;
 }

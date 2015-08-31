@@ -324,12 +324,6 @@ nav.navbar {
   width: 30px;
 }
 
-nav .brand-logo {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 400;
-  padding: 0 20px 0 20px;
-}
-
 nav .curr-chat {
   font-family: 'Orbitron', sans-serif;
   font-size: 2rem;

@@ -11,45 +11,43 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>&#9829 StudyTree</title>
+    <title>&#9829 StudentSpace</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 
-    <!-- Font awesome CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Indie+Flower' rel='stylesheet' type='text/css'>
-
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/main.css">
-
+    <link rel="stylesheet" href="css/main.css">
   </head>
 
   <body>
-
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">StudyTree</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li role="presentation"><a href="view.php">View</a></li>
-            <li role="presentation"><a href="create.php">Create</a></li>
-            <li role="presentation"><a href="chat.php">My Spaces</a></li>
-            <li role="presentation"><a href="settings.php">Settings</a></li>
-            <li role="presentation" class="active" id="nav-accent"><a href="feedback.php">Feedback</a></li>
-            <li role="presentation"><a href="logout.php">Logout</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+    <nav>
+      <div class="nav-wrapper blue darken-4">
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <a href="#" class="brand-logo">space<span class="amber-text text-darken-1">@ucsd</span></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="view.php">View</a></li>
+          <li><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li class="active" id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+        <ul id="mobile-demo" class="side-nav right">
+          <li><a href="view.php">View</a></li>
+          <li><a href="create.php">Create</a></li>
+          <li><a href="chat.php">My Spaces</a></li>
+          <li><a href="settings.php">Settings</a></li>
+          <li class="active" id="nav-accent"><a href="feedback.php">Feedback</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -79,18 +77,13 @@
   <div class="form-group">
     <label class="col-md-4 control-label" for="singlebutton"></label>
     <div class="col-md-4">
-      <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit!</button>
+      <button id="singlebutton" name="singlebutton" class="btn light-blue accent-3">Submit!</button>
     </div>
   </div>
 
   </fieldset>
   </form>
 </div>
-    
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
   </body>
 </html>

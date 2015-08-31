@@ -3,3 +3,4 @@ ChatServer/nohup.out
 MySQL/Backup.sql
 lib/htmlpurifier
 lib/PHPMailer
+*.swp

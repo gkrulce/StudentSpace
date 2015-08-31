@@ -4,7 +4,6 @@ $(document).ready(function() {
   */
   $('.data-row').click(function() {
     var isRevealed = $(this).hasClass('current');
-    console.log('isRevealed: ' + isRevealed);
 
     // Remove current opened states on all!
     $('.data-row').removeClass('current');
@@ -29,6 +28,7 @@ $(document).ready(function() {
   });
 });
 $(document).ready(function() {
+  $(".button-collapse").sideNav(); // Initialize sideNav (materialize).
   $('.joinStudyGroupBtn').click(function() {
     var groupId = $(this).attr('id');
     $.post('php/joinStudyGroup.php', {id: groupId}, function(data) {
