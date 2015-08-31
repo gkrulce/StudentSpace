@@ -42,8 +42,8 @@
     </script>
 
     <!-- Chat Javascript -->
-    <script src="js/chat.js"></script>
-    <script src="js/filters.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../js/filters.js"></script>
   </head>
 
   <body ng-controller="ChatCtrl">
