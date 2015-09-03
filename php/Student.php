@@ -18,6 +18,11 @@ class Student
   {
     return $this->hash;
   }
+
+  public function getName()
+  {
+    return $this->name;
+  }
   public function getAllStudyGroups($db)
   {
     //Hardcoded value assumes PST

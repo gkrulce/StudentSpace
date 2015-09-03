@@ -3,10 +3,19 @@ include('db.php');
 include('Procedures.php'); //Generic database queries
 include('Student.php'); // Database queries with student
 session_start();
-// Storing Session
-if(!isset($_SESSION['user']))
+if (array_key_exists('user', $_SESSION))
 {
-	header('Location: ../index.html');
+	return;
 }
+$pid = $_SERVER['PID'];
+$row = Procedures::login($db, $pid);
 
+if($row)
+{
+	$_SESSION['user'] = new Student($row["pid"], $row["first_name"], $row["hash"]);
+}else
+{
+	Procedures::register($db, $_SERVER);
+	header('Location: /secure/newUser.php');
+}
 ?>

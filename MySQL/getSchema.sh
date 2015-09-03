@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mysqldump -d -h localhost -u ggr ucsdspace > Schema.sql
+mysqldump -d -h localhost -u webapp ucsdspace > Schema.sql

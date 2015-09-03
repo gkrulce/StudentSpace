@@ -1,5 +1,6 @@
 <?php
   include('../php/session.php');
+  echo $_SESSION['user']->getName();
 ?>
 <!DOCTYPE html>
 <html lang="en">
