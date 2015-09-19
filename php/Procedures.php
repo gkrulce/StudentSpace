@@ -22,13 +22,15 @@
       $pid = $server['PID'];
       $firstName = $server['FIRST_NAME'];
       $lastName = $server['LAST_NAME'];
+      $username = $server['NETWORKUSERID'];
       $email = $server['LONG_EMAIL'];
 
-      $stmt=$db->prepare('INSERT INTO users (pid, email, first_name, last_name, hash) VALUES (:pid, :email, :first_name, :last_name, :hash);');
+      $stmt=$db->prepare('INSERT INTO users (pid, email, first_name, last_name, username, hash) VALUES (:pid, :email, :first_name, :last_name, :username, :hash);');
       $stmt->bindParam(":pid", $pid);
       $stmt->bindParam(":email", $email);
       $stmt->bindParam(":first_name", $firstName);
       $stmt->bindParam(":last_name", $lastName);
+      $stmt->bindParam(":username", $username);
       $stmt->bindParam(":hash", md5(rand()));
 
       $stmt->execute();

@@ -1,7 +1,7 @@
 function chatReset() {
   $(".resetOnSubmit").val("");
 }
-var socket = io(":3000");
+var socket = io(":500");
 
 /*---------------------------------------------------------------------------*/
 /* ANGULAR JS */

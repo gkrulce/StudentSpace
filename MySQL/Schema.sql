@@ -1,8 +1,8 @@
--- MySQL dump 10.14  Distrib 5.5.44-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.20-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: ucsdspace
 -- ------------------------------------------------------
--- Server version	5.5.44-MariaDB
+-- Server version	10.0.20-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,7 @@ CREATE TABLE `groups` (
   `name` varchar(255) NOT NULL,
   `hash` char(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=270 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=276 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,6 +77,7 @@ CREATE TABLE `study_group_times` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `offset` int(11) DEFAULT NULL,
+  `time_range` tinytext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -97,9 +98,9 @@ CREATE TABLE `study_groups` (
   PRIMARY KEY (`id`),
   KEY `class_id` (`class_id`),
   KEY `time` (`time`),
-  CONSTRAINT `study_groups_ibfk_4` FOREIGN KEY (`time`) REFERENCES `study_group_times` (`id`),
   CONSTRAINT `study_groups_ibfk_2` FOREIGN KEY (`class_id`) REFERENCES `class_groups` (`id`),
-  CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
+  CONSTRAINT `study_groups_ibfk_3` FOREIGN KEY (`id`) REFERENCES `groups` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `study_groups_ibfk_4` FOREIGN KEY (`time`) REFERENCES `study_group_times` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,6 +117,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `hash` char(32) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -147,4 +149,4 @@ CREATE TABLE `users_to_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-31  8:59:59
+-- Dump completed on 2015-09-19 14:02:25

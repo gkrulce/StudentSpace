@@ -1,11 +1,17 @@
 /* SERVER SIDE Javascript */
 
 // Setup basic express server
+var fs = require('fs');
+var privateKey = fs.readFileSync('/etc/apache2/ssl.key/studygroups.key', 'utf8');
+var certificate = fs.readFileSync('/etc/apache2/ssl.crt/studygroups.cer', 'utf8');
+var certificateChain = fs.readFileSync('/etc/apache2/ssl.crt/studygroups.cer', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app);
+var server = require('https').createServer(credentials, app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 3000;
+var port = 500;
 var mysql = require('mysql');
 var db;
 var db_config = {
