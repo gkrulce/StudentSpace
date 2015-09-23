@@ -7,6 +7,12 @@
       return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function logLogin($db, $pid) {
+        $stmt = $db->prepare("INSERT INTO logins (user_pid) VALUES (:pid);");
+	$stmt->bindParam(":pid", $pid, PDO::PARAM_STR);
+	$stmt->execute();
+    }
+
     public static function getStudyTimes($db) {
       return $db->query('SELECT id, name, time_range FROM study_group_times;');
     }

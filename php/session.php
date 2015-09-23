@@ -12,6 +12,7 @@ $row = Procedures::login($db, $pid);
 
 if($row)
 {
+	Procedures::logLogin($db, $row["pid"]);
 	$_SESSION['user'] = new Student($row["pid"], $row["first_name"], $row["hash"]);
 }else
 {
