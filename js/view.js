@@ -31,7 +31,7 @@ $(document).ready(function() {
   $(".button-collapse").sideNav(); // Initialize sideNav (materialize).
   $('.joinStudyGroupBtn').click(function() {
     var groupId = $(this).attr('id');
-    $.post('php/joinStudyGroup.php', {id: groupId}, function(data) {
+    $.post('/php/joinStudyGroup.php', {id: groupId}, function(data) {
       $('#' + groupId).closest('tr').hide();
       $('#' + groupId).closest('tr').prev('tr').hide();
       window.location.replace("chat.php?action=join");
