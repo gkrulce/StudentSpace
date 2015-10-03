@@ -6,14 +6,12 @@ function sendMail($to, $subject, $body)
 $mail = new PHPMailer;
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.mailgun.org';                     // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = '';   // SMTP username
-$mail->Password = ''; // SMTP password
+$mail->Host = 'smtp.ucsd.edu;studygroups.ucsd.edu';                     // Specify main and backup SMTP servers
 $mail->SMTPSecure = 'tls';                            // Enable encryption, only 'tls' is accepted
 
-$mail->From = 'gkrulce@gmail.com';
-$mail->FromName = 'Mailer';
+$mail->AddReplyTo('support@studygroups.ucsd.edu', 'StudentSpace');
+$mail->From = 'no-reply@studygroups.ucsd.edu';
+$mail->FromName = 'StudentSpace';
 $mail->addAddress($to);                 // Add a recipient
 
 $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
